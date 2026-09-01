@@ -37,6 +37,14 @@ archive/
 # First public release: keep local work material out of the repository.
 /skills/*
 !/skills/.gitkeep
+!/skills/gemini-cli/
+!/skills/gemini-cli/**
+!/skills/rdk-model-zoo-demo-review/
+!/skills/rdk-model-zoo-demo-review/**
+!/skills/rdk-x5-toolchain-quantization/
+!/skills/rdk-x5-toolchain-quantization/**
+!/skills/rdk-yolo-toolkit/
+!/skills/rdk-yolo-toolkit/**
 /projects/*
 !/projects/.gitkeep
 /shared/*

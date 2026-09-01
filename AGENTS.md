@@ -8,6 +8,8 @@ This repository is a workspace for personal Codex Skills. Keep installable skill
 - `projects/`: project briefs, design notes, task lists, and validation plans for skills under development.
 - `shared/`: reusable references, scripts, and assets used by multiple skills.
 - `templates/`: starter templates, especially `templates/skill-project` for new skill planning.
+- `sources/`: official origins and installation notes for third-party Skills; do not mirror their content without explicit permission.
+- `scripts/`: cross-platform helpers for installing this repository's personal Skills.
 - `archive/`: historical workspaces, old distributions, large source materials, or experimental artifacts. Do not treat archived projects as active source unless explicitly requested.
 
 ## Build, Test, and Development Commands
