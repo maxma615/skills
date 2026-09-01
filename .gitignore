@@ -37,14 +37,17 @@ archive/
 # First public release: keep local work material out of the repository.
 /skills/*
 !/skills/.gitkeep
-!/skills/gemini-cli/
-!/skills/gemini-cli/**
+!/skills/rdk-course-slides-generator/
+!/skills/rdk-course-slides-generator/**
 !/skills/rdk-model-zoo-demo-review/
 !/skills/rdk-model-zoo-demo-review/**
 !/skills/rdk-x5-toolchain-quantization/
 !/skills/rdk-x5-toolchain-quantization/**
 !/skills/rdk-yolo-toolkit/
 !/skills/rdk-yolo-toolkit/**
+
+# Keep validation bytecode out of the published RDK course Skill.
+/skills/rdk-course-slides-generator/**/__pycache__/
 /projects/*
 !/projects/.gitkeep
 /shared/*

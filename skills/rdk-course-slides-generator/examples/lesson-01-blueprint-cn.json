@@ -1,0 +1,631 @@
+{
+  "meta": {
+    "title": "RDK 小课堂｜第一课：RDK 社区与生态入门",
+    "lang": "cn",
+    "logo_key": "logo-cn",
+    "hint": "键盘：← / → / Space 切换页面"
+  },
+  "slides": [
+    {
+      "pattern": "cover",
+      "data_title": "封面",
+      "kicker": "Lesson 01",
+      "title": "RDK 社区与 [gradient]生态入门[/gradient]",
+      "lead": "先建立资源地图，再开始系统烧录、外设验证、模型部署与 TROS 开发。",
+      "tags": [
+        "文档入口",
+        "NodeHub",
+        "GitHub",
+        "ModelZoo",
+        "论坛"
+      ],
+      "hero_nodes": [
+        "文档手册",
+        "NodeHub",
+        "GitHub",
+        "论坛"
+      ],
+      "hero_center": {
+        "strong": "RDK",
+        "sub": "生态资源地图"
+      }
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "本课要解决",
+      "kicker": "Why This Course",
+      "title": "本课先解决 [gradient]去哪找答案[/gradient]",
+      "lead": "刚开始用 RDK，最怕的不是报错，而是报错后不知道去哪找答案。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "search",
+          "title": "文档在哪里？",
+          "body": "不同板卡、不同模块对应不同手册。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "grid",
+          "title": "分支怎么选？",
+          "body": "ModelZoo、TROS、源码仓库都要确认平台与版本。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "list-check",
+          "title": "问题怎么问？",
+          "body": "版本、步骤、日志、已做排查决定解决效率。"
+        }
+      ]
+    },
+    {
+      "pattern": "split-checklist",
+      "data_title": "本课目标",
+      "kicker": "What You'll Learn",
+      "title": "完成本课后你将能够",
+      "lead": "把 RDK 生态资源地图内化成一张可以快速定位的心智图。",
+      "items": [
+        "找到并收藏 RDK 开发者社区、文档手册的核心入口",
+        "按板卡型号定位对应文档，区分快速开始、开发案例、API 三类资料",
+        "使用 NodeHub 按板卡和应用类型找到可运行案例",
+        "在 GitHub D-Robotics 组织找到目标仓库，读懂 README",
+        "在 ModelZoo 中按板卡分支找到已适配模型",
+        "按规范在论坛或 Issues 发帖提问"
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "五大模块",
+      "kicker": "Resource Map",
+      "title": "RDK 生态的五大资源模块",
+      "lead": "先记住这五个入口，后面每一课都用得到。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "layers",
+          "title": "文档资源中心",
+          "body": "各板卡手册、快速开始、硬件接口、SDK/API 说明。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "globe",
+          "title": "NodeHub",
+          "body": "即拿即用的机器人应用中心（按板卡 + 应用分类）。"
+        },
+        {
+          "tint": "tint-3",
+          "icon": "wrench",
+          "title": "RDK Studio",
+          "body": "桌面工具：一键烧录、连接设备、内置终端。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "code",
+          "title": "GitHub / ModelZoo",
+          "body": "开源代码 + 已适配 BPU 的模型部署示例。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "message",
+          "title": "社区论坛",
+          "body": "提问、交流、分享经验的平台。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "关键概念",
+      "kicker": "Key Concepts",
+      "title": "几个关键词先认识",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "chip",
+          "title": "RDK",
+          "body": "Robotics Development Kit，面向机器人开发者的开发套件。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "brain",
+          "title": "BPU",
+          "body": "Brain Processing Unit，板载 AI 推理加速单元。"
+        },
+        {
+          "tint": "tint-3",
+          "icon": "terminal",
+          "title": "RDK OS",
+          "body": "基于 Ubuntu 的系统镜像，集成驱动和运行时。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "wrench",
+          "title": "miniboot",
+          "body": "RDK 的引导程序，部分底层问题需要同步更新。"
+        },
+        {
+          "tint": "tint-5",
+          "icon": "robot",
+          "title": "tros",
+          "body": "TogetheROS.BOT，基于 ROS2 深度定制的机器人操作系统。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "globe",
+          "title": "NodeHub",
+          "body": "模块化案例库，每个 Node 是一个可运行的功能模块。"
+        },
+        {
+          "tint": "tint-1",
+          "icon": "grid",
+          "title": "ModelZoo",
+          "body": "已针对 BPU 优化的模型和部署示例仓库。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "book-open",
+          "title": "RDK Studio",
+          "body": "桌面一体化工具，一键烧录、连接、调试。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "文档中心",
+      "kicker": "Documentation",
+      "title": "文档中心：先入手的第一入口",
+      "lead": "打开文档后第一件事不是搜索关键词，而是先确认板卡系列。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "rocket",
+          "title": "快速开始",
+          "body": "开箱、烧录、系统初始化、SSH 连接。第一次拿到板子从这里开始。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "video",
+          "title": "开发案例",
+          "body": "视觉/语音/机器人应用的现成路径，是从入门到开发的桥梁。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "layers",
+          "title": "SDK / API",
+          "body": "参数怎么配、API 怎么调、硬件接口怎么用，深入开发时查阅。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "NodeHub 分类",
+      "kicker": "NodeHub · Categories",
+      "title": "NodeHub：即拿即用的应用中心",
+      "lead": "每个 Node 是一个可直接部署的功能模块，官方目标：一分钟部署、成功率 100%。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "brain",
+          "title": "大模型应用",
+          "body": "大语言模型推理、多模态问答。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "robot",
+          "title": "综合应用",
+          "body": "室内服务机器人、人形机器人目标检测。"
+        },
+        {
+          "tint": "tint-3",
+          "icon": "eye",
+          "title": "环境感知",
+          "body": "目标检测、语义分割、深度估计。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "message",
+          "title": "人机交互",
+          "body": "语音唤醒、手势识别、人体关键点。"
+        },
+        {
+          "tint": "tint-5",
+          "icon": "chip",
+          "title": "外设适配",
+          "body": "摄像头、传感器、底盘驱动。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "target",
+          "title": "比赛专区",
+          "body": "RoboMaster 等竞赛场景方案。"
+        },
+        {
+          "tint": "tint-1",
+          "icon": "arm",
+          "title": "强化学习",
+          "body": "机器人 RL 训练与部署示例。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "star",
+          "title": "持续新增",
+          "body": "社区共建的方向不断扩充。"
+        }
+      ]
+    },
+    {
+      "pattern": "flow-5",
+      "data_title": "NodeHub 四步",
+      "kicker": "NodeHub · Four Steps",
+      "title": "NodeHub 使用四步走",
+      "steps": [
+        {
+          "title": "① 选平台",
+          "sub": "按 RDK X3 / X5 / Ultra 板卡筛选。"
+        },
+        {
+          "title": "② 选分类",
+          "sub": "视觉找环境感知，语音找人机交互。"
+        },
+        {
+          "title": "③ 看 README",
+          "sub": "功能 / 物料 / 使用 / 接口 / FAQ 六段式。"
+        },
+        {
+          "title": "④ 进 GitHub",
+          "sub": "看源码、Issues 和历史更新。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "RDK Studio",
+      "kicker": "Desktop Toolkit",
+      "title": "RDK Studio：桌面一体化工具",
+      "lead": "Windows 版已发布，Mac/Linux 即将发布。对不习惯命令行的用户，可以显著降低上手难度。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "rocket",
+          "title": "一键烧录",
+          "body": "无需额外工具，直接在设备上完成系统镜像烧录。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "chip",
+          "title": "设备管理",
+          "body": "USB 或 SSH 连接 RDK，自动识别已连接设备。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "terminal",
+          "title": "内置终端",
+          "body": "在界面内直接操作命令行，支持串口 / SSH 调试。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "book-open",
+          "title": "文件与日志",
+          "body": "主机与板卡间可视化传输文件，实时查看运行日志。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "GitHub 与 ModelZoo",
+      "kicker": "Source & Models",
+      "title": "GitHub 找源码，ModelZoo 找模型",
+      "lead": "使用时先看 README、再看分支、最后看 Issues。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "book-open",
+          "title": "README",
+          "body": "先看功能、平台、安装和运行方式。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "grid",
+          "title": "分支",
+          "body": "rdk_x5 / rdk_x5_legacy / rdk_x3 / rdk_s，选错会流程不匹配。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "list-check",
+          "title": "Issues",
+          "body": "搜报错、功能名、板卡型号，很多问题已有答案。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "提问平台",
+      "kicker": "Where to Ask",
+      "title": "遇到问题去哪里问",
+      "lead": "根据问题类型和位置选择渠道，效率差别很大。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "message",
+          "title": "中文论坛",
+          "body": "forum.d-robotics.cc — 结构化提问首选，答案能被后人搜到。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "github",
+          "title": "GitHub Issues",
+          "body": "确定是代码 / 功能 Bug 的问题去对应仓库 Issues。"
+        },
+        {
+          "tint": "tint-5",
+          "icon": "globe",
+          "title": "英文 / Discord",
+          "body": "海外用户：forum-en.d-robotics.cc 与 Discord。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "brain",
+          "title": "天宫助手",
+          "body": "工具链问题（量化、编译）用 chat.oe.horizon.auto。"
+        }
+      ]
+    },
+    {
+      "pattern": "flow-5",
+      "data_title": "发帖三件事",
+      "kicker": "Before You Post",
+      "title": "发帖前先做三件事",
+      "steps": [
+        {
+          "title": "① 搜论坛关键词",
+          "sub": "用报错信息或功能名搜。"
+        },
+        {
+          "title": "② 查官方文档",
+          "sub": "确认操作步骤和文档一致。"
+        },
+        {
+          "title": "③ 查 GitHub Issues",
+          "sub": "代码层面问题去仓库 Issues 找讨论。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "发帖原则",
+      "kicker": "Post Etiquette",
+      "title": "发帖三大基本原则",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "search",
+          "title": "① 标题要明确",
+          "body": "「RDK X5 HDMI 4K 显示异常」而不是「求助」「大佬帮忙」。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "target",
+          "title": "② 一帖一问题",
+          "body": "别把 HDMI、ROS、摄像头多个不相关问题混在同一帖中。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "list-check",
+          "title": "③ 描述要完整",
+          "body": "说清做什么、用什么、出现什么、预期什么、差异在哪。"
+        }
+      ]
+    },
+    {
+      "pattern": "code-highlight",
+      "data_title": "基础排查四步",
+      "kicker": "Baseline Debug",
+      "title": "基础排查四步（附命令）",
+      "lead": "很多问题已在新版本镜像或 miniboot 中修复，做完这 4 步再发帖能省下双方大量时间。",
+      "cards": [
+        {
+          "title": "① 查版本",
+          "code": "sudo rdkos_info",
+          "note": "发帖时至少写清系统镜像版本和 miniboot 版本。"
+        },
+        {
+          "title": "② 升软件包",
+          "code": "sudo apt update && sudo apt upgrade",
+          "note": "保证 apt 源里的关键包已到最新。"
+        },
+        {
+          "title": "③ 升 miniboot",
+          "code": "sudo rdk-miniboot-update",
+          "note": "底层引导修复往往通过 miniboot 下发。"
+        },
+        {
+          "title": "④ 跑官方 Demo",
+          "code": "先用未修改的原版 Demo 验证",
+          "note": "原版正常说明问题在自己的改动上，对比差异定位快。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-6",
+      "data_title": "提问模板",
+      "kicker": "Question Template",
+      "title": "一个好问题应该包含什么",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "search",
+          "title": "标题",
+          "body": "板卡型号 + 功能模块 + 具体现象。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "chip",
+          "title": "环境",
+          "body": "板卡、系统版本、镜像和软件包状态。"
+        },
+        {
+          "tint": "tint-3",
+          "icon": "list-check",
+          "title": "步骤",
+          "body": "复现步骤、预期结果、实际结果。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "layers",
+          "title": "资料",
+          "body": "手册、GitHub、ModelZoo、论坛链接。"
+        },
+        {
+          "tint": "tint-5",
+          "icon": "wrench",
+          "title": "排查",
+          "body": "已做检查、换线材、官方 Demo、Issues。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "terminal",
+          "title": "日志",
+          "body": "完整日志，不只截最后一句错误。"
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "常见问题",
+      "kicker": "FAQ",
+      "title": "几个高频问题速答",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "book-open",
+          "title": "文档里找不到？",
+          "body": "先确认板卡型号：X3 / X5 / S100 的文档是分开的，左侧导航可切换。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "globe",
+          "title": "GitHub 访问慢？",
+          "body": "配置加速代理或用 Gitee 等镜像；重要片段在文档和 NodeHub 也有展示。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "grid",
+          "title": "NodeHub 版本不匹配？",
+          "body": "先看平台分类是否对，再看 README 系统版本要求，不满足先升级镜像。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "brain",
+          "title": "工具链问题？",
+          "body": "算法工具链相关用天宫助手：chat.oe.horizon.auto"
+        }
+      ]
+    },
+    {
+      "pattern": "split-checklist",
+      "data_title": "完成标准",
+      "kicker": "Completion Checklist",
+      "title": "本课完成标准",
+      "lead": "满足以下六项，说明第一课学习完成。",
+      "items": [
+        "收藏开发者社区、文档中心、GitHub、ModelZoo、中文论坛",
+        "能根据板卡型号找到对应文档，并区分快速开始 / 开发案例 / API",
+        "能在 NodeHub 中按板卡和应用分类找到一个可运行案例",
+        "能在 ModelZoo 中找到目标板卡对应的分支",
+        "能写出一个符合规范的问题帖子标题",
+        "理解 RDK Studio 与 SSH / Rufus 等工具的关系"
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "本课小结",
+      "kicker": "Summary",
+      "title": "本课记住这 4 句话",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "layers",
+          "title": "先收藏入口",
+          "body": "社区、文档、GitHub 三个核心入口，其他按需打开。"
+        },
+        {
+          "tint": "tint-2",
+          "icon": "globe",
+          "title": "NodeHub 四步",
+          "body": "选平台 → 选分类 → 看 README → 进 GitHub。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "grid",
+          "title": "ModelZoo 认分支",
+          "body": "X5 / X5 legacy / X3 / S 不同流程，选错会流程不匹配。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "list-check",
+          "title": "提问要有效",
+          "body": "标题清晰、一帖一问、版本 + 日志 + 已做排查一起交。"
+        }
+      ]
+    },
+    {
+      "pattern": "resource-list",
+      "data_title": "核心资源",
+      "kicker": "Resources",
+      "title": "五个必收藏入口",
+      "open_label": "打开",
+      "resources": [
+        {
+          "name": "开发者社区官网",
+          "desc": "RDK 生态总入口",
+          "href": "https://developer.d-robotics.cc/"
+        },
+        {
+          "name": "文档资源中心",
+          "desc": "板卡手册、系统配置、FAQ",
+          "href": "https://developer.d-robotics.cc/rdk_doc_center/"
+        },
+        {
+          "name": "D-Robotics GitHub",
+          "desc": "源码、TROS、手册仓库",
+          "href": "https://github.com/D-Robotics"
+        },
+        {
+          "name": "ModelZoo",
+          "desc": "BPU 模型部署示例",
+          "href": "https://github.com/D-Robotics/rdk_model_zoo"
+        },
+        {
+          "name": "中文论坛",
+          "desc": "问题反馈、经验交流",
+          "href": "https://forum.d-robotics.cc/"
+        }
+      ]
+    },
+    {
+      "pattern": "closing",
+      "data_title": "下一课",
+      "kicker": "Up Next · Lesson 02",
+      "title": "下一课：RDK 产品简介",
+      "lead": "接下来会系统了解 RDK 产品系列、硬件特性、典型场景和选型思路。",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "chip",
+          "title": "产品系列",
+          "body": "X / S / 模组 / 整机。"
+        },
+        {
+          "tint": "tint-4",
+          "icon": "layers",
+          "title": "硬件特性",
+          "body": "接口、算力、外设。"
+        },
+        {
+          "tint": "tint-6",
+          "icon": "target",
+          "title": "使用场景",
+          "body": "教学、机器人、AI 应用。"
+        }
+      ]
+    }
+  ]
+}

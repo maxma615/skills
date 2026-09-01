@@ -1,7 +1,0 @@
-interface:
-  display_name: "Gemini CLI"
-  short_description: "Use local Gemini for alternate passes."
-  default_prompt: "Use $gemini-cli to get an alternate model pass for the current coding or frontend task."
-
-policy:
-  allow_implicit_invocation: true

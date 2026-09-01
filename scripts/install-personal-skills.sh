@@ -54,7 +54,7 @@ if [ -n "$destination" ] && [ "$target" = all ]; then
 fi
 
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-skill_names='gemini-cli rdk-model-zoo-demo-review rdk-x5-toolchain-quantization rdk-yolo-toolkit'
+skill_names='rdk-course-slides-generator rdk-model-zoo-demo-review rdk-x5-toolchain-quantization rdk-yolo-toolkit'
 
 install_to() {
   target_name=$1

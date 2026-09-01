@@ -1,0 +1,5 @@
+interface:
+  display_name: "RDK Course Slides"
+  short_description: "Create bilingual RDK HTML course decks."
+  brand_color: "#FF3C00"
+  default_prompt: "Use $rdk-course-slides-generator to turn my RDK handbook Markdown into a self-contained Chinese HTML lesson deck."

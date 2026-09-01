@@ -1,0 +1,631 @@
+{
+  "meta": {
+    "title": "RDK Course | Lesson 01: Community & Ecosystem",
+    "lang": "en",
+    "logo_key": "logo-en",
+    "hint": "Keyboard: ← / → / Space to navigate"
+  },
+  "slides": [
+    {
+      "pattern": "cover",
+      "data_title": "Cover",
+      "kicker": "Lesson 01",
+      "title": "RDK Community & [gradient]Ecosystem[/gradient]",
+      "lead": "Build your resource map first, then move to flashing, peripherals, model deployment and TROS development.",
+      "tags": [
+        "Docs",
+        "NodeHub",
+        "GitHub",
+        "Model Zoo",
+        "Forum"
+      ],
+      "hero_nodes": [
+        "Docs",
+        "NodeHub",
+        "GitHub",
+        "Forum"
+      ],
+      "hero_center": {
+        "strong": "RDK",
+        "sub": "Resource map"
+      }
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "Why This Course",
+      "kicker": "Why This Course",
+      "title": "First hurdle: [gradient]where to look[/gradient]",
+      "lead": "For new RDK users, the biggest blocker isn't the error itself — it's not knowing where to look for the answer.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "search",
+          "title": "Where are the docs?",
+          "body": "Different boards and modules map to different manuals."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "grid",
+          "title": "Which branch?",
+          "body": "ModelZoo, TROS and source repos each require the right platform/version."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "list-check",
+          "title": "How to ask?",
+          "body": "Version, steps, logs and prior investigation decide response speed."
+        }
+      ]
+    },
+    {
+      "pattern": "split-checklist",
+      "data_title": "Goals",
+      "kicker": "What You'll Learn",
+      "title": "By the end of this lesson",
+      "lead": "You'll turn the RDK ecosystem into a mental map you can navigate quickly.",
+      "items": [
+        "Bookmark the developer community and documentation hub",
+        "Locate your board's docs and distinguish Quick Start / Case Studies / API",
+        "Use NodeHub to find runnable examples by board and use case",
+        "Find repos in the D-Robotics GitHub org and read a README effectively",
+        "Locate the right branch for your board in Model Zoo",
+        "Write a well-formed forum post or GitHub Issue"
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "Five modules",
+      "kicker": "Resource Map",
+      "title": "Five resource modules to remember",
+      "lead": "These five entry points show up in every future lesson.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "layers",
+          "title": "Docs hub",
+          "body": "Per-board manuals, quick starts, hardware interfaces, SDK/API references."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "globe",
+          "title": "NodeHub",
+          "body": "Ready-to-run application center (browse by board + category)."
+        },
+        {
+          "tint": "tint-3",
+          "icon": "wrench",
+          "title": "RDK Studio",
+          "body": "Desktop tool: one-click flashing, device connect, built-in terminal."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "code",
+          "title": "GitHub / Model Zoo",
+          "body": "Open-source code plus BPU-optimized model samples."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "message",
+          "title": "Forum",
+          "body": "Ask, discuss, share experience."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "Key concepts",
+      "kicker": "Key Concepts",
+      "title": "The essential terms",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "chip",
+          "title": "RDK",
+          "body": "Robotics Development Kit — a hardware kit for robotics developers."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "brain",
+          "title": "BPU",
+          "body": "Brain Processing Unit — on-board AI inference accelerator."
+        },
+        {
+          "tint": "tint-3",
+          "icon": "terminal",
+          "title": "RDK OS",
+          "body": "Ubuntu-based system image with drivers and runtime pre-installed."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "wrench",
+          "title": "miniboot",
+          "body": "RDK bootloader; some low-level fixes ship as miniboot updates."
+        },
+        {
+          "tint": "tint-5",
+          "icon": "robot",
+          "title": "tros",
+          "body": "TogetheROS.BOT — ROS2-based robotics OS deeply customized for RDK."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "globe",
+          "title": "NodeHub",
+          "body": "Modular example hub; each Node is a runnable feature module."
+        },
+        {
+          "tint": "tint-1",
+          "icon": "grid",
+          "title": "Model Zoo",
+          "body": "Repo of BPU-optimized models with deployment samples."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "book-open",
+          "title": "RDK Studio",
+          "body": "Desktop toolkit for flashing, connecting and debugging."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "Docs hub",
+      "kicker": "Documentation",
+      "title": "Docs hub: your first entry point",
+      "lead": "Don't start with a keyword search. Confirm your board series first.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "rocket",
+          "title": "Quick Start",
+          "body": "Unboxing, flashing, initial setup, SSH. Start here with a new board."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "video",
+          "title": "Case Studies",
+          "body": "Ready-made paths for vision, audio and robotics — the bridge from onboarding to real dev."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "layers",
+          "title": "SDK / API",
+          "body": "Parameters, API details, hardware interfaces — the reference for deep dev."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "NodeHub categories",
+      "kicker": "NodeHub · Categories",
+      "title": "NodeHub: ready-to-run apps",
+      "lead": "Each Node is a deployable feature module. Target: one-minute deploy, 100% success rate.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "brain",
+          "title": "LLM apps",
+          "body": "Large-language-model inference, multimodal Q&A."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "robot",
+          "title": "Integrated apps",
+          "body": "Indoor service robots, humanoid object detection."
+        },
+        {
+          "tint": "tint-3",
+          "icon": "eye",
+          "title": "Perception",
+          "body": "Object detection, semantic segmentation, depth estimation."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "message",
+          "title": "HCI",
+          "body": "Wake word, gesture, human keypoints."
+        },
+        {
+          "tint": "tint-5",
+          "icon": "chip",
+          "title": "Peripherals",
+          "body": "Cameras, sensors, chassis drivers."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "target",
+          "title": "Competitions",
+          "body": "RoboMaster and similar contests."
+        },
+        {
+          "tint": "tint-1",
+          "icon": "arm",
+          "title": "Reinforcement",
+          "body": "RL training and deploy samples."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "star",
+          "title": "Ongoing",
+          "body": "Community-contributed directions keep growing."
+        }
+      ]
+    },
+    {
+      "pattern": "flow-5",
+      "data_title": "NodeHub 4 steps",
+      "kicker": "NodeHub · Four Steps",
+      "title": "Four steps to use NodeHub",
+      "steps": [
+        {
+          "title": "① Pick platform",
+          "sub": "Filter by RDK X3 / X5 / Ultra."
+        },
+        {
+          "title": "② Pick category",
+          "sub": "Vision → Perception; voice → HCI."
+        },
+        {
+          "title": "③ Read README",
+          "sub": "Feature / bill / usage / interface / FAQ."
+        },
+        {
+          "title": "④ Go to GitHub",
+          "sub": "Source, Issues and history."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "RDK Studio",
+      "kicker": "Desktop Toolkit",
+      "title": "RDK Studio: all-in-one desktop toolkit",
+      "lead": "Windows released; macOS / Linux coming. For users less comfortable with the command line, RDK Studio drops the entry barrier significantly.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "rocket",
+          "title": "One-click flashing",
+          "body": "Flash system images directly, no extra tools needed."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "chip",
+          "title": "Device management",
+          "body": "USB or SSH connection with auto-detected devices."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "terminal",
+          "title": "Built-in terminal",
+          "body": "Serial / SSH debug directly from the interface."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "book-open",
+          "title": "Files & logs",
+          "body": "Visual file transfer plus live log viewing."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "GitHub & Model Zoo",
+      "kicker": "Source & Models",
+      "title": "GitHub for code, Model Zoo for models",
+      "lead": "Always look at README, then branch, then Issues.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "book-open",
+          "title": "README",
+          "body": "Read features, platforms, install and run steps first."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "grid",
+          "title": "Branch",
+          "body": "rdk_x5 / rdk_x5_legacy / rdk_x3 / rdk_s — wrong branch breaks the flow."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "list-check",
+          "title": "Issues",
+          "body": "Search error messages, feature names, board models — many answers are already there."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "Where to ask",
+      "kicker": "Where to Ask",
+      "title": "Where to ask questions",
+      "lead": "Pick the right channel by question type — the response quality varies a lot.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "message",
+          "title": "Chinese Forum",
+          "body": "forum.d-robotics.cc — structured Q&A, answers stay searchable."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "github",
+          "title": "GitHub Issues",
+          "body": "For confirmed code / feature bugs, file in the corresponding repo."
+        },
+        {
+          "tint": "tint-5",
+          "icon": "globe",
+          "title": "English / Discord",
+          "body": "Overseas: forum-en.d-robotics.cc and Discord."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "brain",
+          "title": "Tiangong Assistant",
+          "body": "For toolchain (quantization, compile) questions: chat.oe.horizon.auto"
+        }
+      ]
+    },
+    {
+      "pattern": "flow-5",
+      "data_title": "Before you post",
+      "kicker": "Before You Post",
+      "title": "Do three things before you post",
+      "steps": [
+        {
+          "title": "① Search the forum",
+          "sub": "Use the error message or feature name."
+        },
+        {
+          "title": "② Check the docs",
+          "sub": "Make sure your steps match the manual."
+        },
+        {
+          "title": "③ Search GitHub Issues",
+          "sub": "Code-level bugs likely have discussion."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-3",
+      "data_title": "Post etiquette",
+      "kicker": "Post Etiquette",
+      "title": "Three rules for a good post",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "search",
+          "title": "① Specific title",
+          "body": "\"RDK X5 HDMI 4K display broken\" — not \"help\" or \"anyone please look\"."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "target",
+          "title": "② One issue per post",
+          "body": "Don't mix HDMI + ROS + camera issues in the same thread."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "list-check",
+          "title": "③ Full description",
+          "body": "What you're doing, what you're using, what happened, expected, actual difference."
+        }
+      ]
+    },
+    {
+      "pattern": "code-highlight",
+      "data_title": "Baseline debug",
+      "kicker": "Baseline Debug",
+      "title": "Four baseline debug steps (with commands)",
+      "lead": "Many issues are already fixed in newer images or miniboot. Running these four steps first saves everyone's time.",
+      "cards": [
+        {
+          "title": "① Check versions",
+          "code": "sudo rdkos_info",
+          "note": "Report at least system image version and miniboot version."
+        },
+        {
+          "title": "② Update packages",
+          "code": "sudo apt update && sudo apt upgrade",
+          "note": "Make sure critical apt packages are up to date."
+        },
+        {
+          "title": "③ Update miniboot",
+          "code": "sudo rdk-miniboot-update",
+          "note": "Low-level fixes often ship via miniboot."
+        },
+        {
+          "title": "④ Run the official demo",
+          "code": "Run the unmodified demo first",
+          "note": "If the demo works, the issue is in your changes — diff to find it fast."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-6",
+      "data_title": "Question template",
+      "kicker": "Question Template",
+      "title": "What a good question looks like",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "search",
+          "title": "Title",
+          "body": "Board model + feature module + specific symptom."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "chip",
+          "title": "Environment",
+          "body": "Board, system version, image and package state."
+        },
+        {
+          "tint": "tint-3",
+          "icon": "list-check",
+          "title": "Steps",
+          "body": "Reproduction steps, expected result, actual result."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "layers",
+          "title": "References",
+          "body": "Links to manual, GitHub, Model Zoo, forum."
+        },
+        {
+          "tint": "tint-5",
+          "icon": "wrench",
+          "title": "What you tried",
+          "body": "Prior debug, cable swap, official demo run, Issues search."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "terminal",
+          "title": "Logs",
+          "body": "Full logs — not just the last error line."
+        }
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "FAQ",
+      "kicker": "FAQ",
+      "title": "Frequently asked questions",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "book-open",
+          "title": "Can't find it in the docs?",
+          "body": "Check the board series first — X3 / X5 / S100 have separate docs. Use the left nav to switch."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "globe",
+          "title": "GitHub is slow?",
+          "body": "Use a proxy or a mirror like Gitee. Key snippets also appear in the docs and NodeHub."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "grid",
+          "title": "NodeHub version mismatch?",
+          "body": "Check the platform filter first, then the README's required system version. Upgrade the image if needed."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "brain",
+          "title": "Toolchain questions?",
+          "body": "For algorithm toolchain issues, use Tiangong Assistant: chat.oe.horizon.auto"
+        }
+      ]
+    },
+    {
+      "pattern": "split-checklist",
+      "data_title": "Completion",
+      "kicker": "Completion Checklist",
+      "title": "Lesson 01 completion checklist",
+      "lead": "Meet these six items and Lesson 01 is done.",
+      "items": [
+        "Bookmark developer community, docs hub, GitHub, Model Zoo, forum",
+        "Locate your board's docs; distinguish Quick Start / Case Studies / API",
+        "Find one runnable NodeHub example matching your board and category",
+        "Locate your board's branch in Model Zoo",
+        "Write one well-formed question title",
+        "Understand where RDK Studio fits vs SSH / Rufus and other tools"
+      ]
+    },
+    {
+      "pattern": "cards-4",
+      "data_title": "Summary",
+      "kicker": "Summary",
+      "title": "Four things to remember",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "layers",
+          "title": "Bookmark first",
+          "body": "Community, docs hub, GitHub — three core entry points; open the rest as needed."
+        },
+        {
+          "tint": "tint-2",
+          "icon": "globe",
+          "title": "NodeHub in 4 steps",
+          "body": "Pick platform → pick category → read README → go to GitHub."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "grid",
+          "title": "Know your branch",
+          "body": "X5 / X5 legacy / X3 / S — different flows, wrong branch breaks everything."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "list-check",
+          "title": "Ask effectively",
+          "body": "Clear title, one issue per post, version + logs + prior debug together."
+        }
+      ]
+    },
+    {
+      "pattern": "resource-list",
+      "data_title": "Resources",
+      "kicker": "Resources",
+      "title": "Five entry points to bookmark",
+      "open_label": "Open",
+      "resources": [
+        {
+          "name": "Developer Community",
+          "desc": "RDK ecosystem home",
+          "href": "https://developer.d-robotics.cc/en"
+        },
+        {
+          "name": "Documentation Hub",
+          "desc": "Manuals, config, FAQ",
+          "href": "https://developer.d-robotics.cc/rdk_doc_center/en"
+        },
+        {
+          "name": "D-Robotics GitHub",
+          "desc": "Source, TROS, manual repos",
+          "href": "https://github.com/D-Robotics"
+        },
+        {
+          "name": "Model Zoo",
+          "desc": "BPU model deployment samples",
+          "href": "https://github.com/D-Robotics/rdk_model_zoo"
+        },
+        {
+          "name": "English Forum",
+          "desc": "Q&A and community discussion",
+          "href": "https://forum-en.d-robotics.cc/"
+        }
+      ]
+    },
+    {
+      "pattern": "closing",
+      "data_title": "Up next",
+      "kicker": "Up Next · Lesson 02",
+      "title": "Up next: RDK product overview",
+      "lead": "Next lesson: RDK product lineup, hardware traits, typical scenarios and how to pick a board.",
+      "cards": [
+        {
+          "tint": "tint-1",
+          "icon": "chip",
+          "title": "Product line",
+          "body": "X / S series, modules and full units."
+        },
+        {
+          "tint": "tint-4",
+          "icon": "layers",
+          "title": "Hardware",
+          "body": "Interfaces, compute, peripherals."
+        },
+        {
+          "tint": "tint-6",
+          "icon": "target",
+          "title": "Use cases",
+          "body": "Education, robotics, AI apps."
+        }
+      ]
+    }
+  ]
+}

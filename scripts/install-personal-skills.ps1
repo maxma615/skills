@@ -11,7 +11,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $skillNames = @(
-    'gemini-cli',
+    'rdk-course-slides-generator',
     'rdk-model-zoo-demo-review',
     'rdk-x5-toolchain-quantization',
     'rdk-yolo-toolkit'
