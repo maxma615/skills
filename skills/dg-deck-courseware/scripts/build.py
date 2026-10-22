@@ -874,6 +874,7 @@ def fonts(chars, force_resubset, log):
         bpath = os.path.join(ASSETS, 'fonts', bundled)
         srcpath = find_font_source(env, names, system)
         need_sub = force_resubset
+        missing = set()
         if not need_sub:
             have = set(TTFont(bpath).getBestCmap())
             missing = {ord(c) for c in chars} - have
@@ -886,6 +887,8 @@ def fonts(chars, force_resubset, log):
                     need_sub = bool(missing & srccmap)
                     if need_sub:
                         log(f'  {bundled}: missing {"".join(sorted(chr(c) for c in missing & srccmap))[:60]}')
+                    else:
+                        missing = set()
         if need_sub:
             if not srcpath:
                 raise SystemExit(f'{bundled}: --resubset needs a source font. Set {env} or see references/fonts.md')
@@ -895,7 +898,10 @@ def fonts(chars, force_resubset, log):
             log(f'  {bundled}: re-subset from {srcpath} ({len(keep)} chars)')
         else:
             res[ph] = b64(bpath)
-            log(f'  {bundled}: bundled subset covers all chars, embedded verbatim')
+            if missing:
+                log(f'  {bundled}: bundled subset embedded; characters it does not cover fall back to system fonts')
+            else:
+                log(f'  {bundled}: bundled subset covers all chars, embedded verbatim')
     return res
 
 
