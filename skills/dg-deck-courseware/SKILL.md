@@ -104,9 +104,13 @@ Style notes are in [references/style-notes.md](references/style-notes.md). The f
   - Say so if asked.
 - **Never invent numbers.**
   - Every figure on a slide must come from docs, the Model Zoo repo, or a real board test.
-  - Label each figure with its source, e.g. README reference vs 实测 plus the board and date.
+  - Label each figure with its source, e.g. README reference vs 实测 plus the board and date. The S600 multi-thread performance slide below is the exception: leave the test date off that slide.
   - Label illustrative visuals 「示意」.
   - When a claim from notes or a handoff is unverified, verify it (RDK docs connector, repo configs, or an on-board test) or drop it.
+- **S600 multi-core / multi-thread performance.** When a slide shows this, present only the measured latency and FPS for each thread count, for example 1, 4, and 12 threads.
+  - Leave the test date off the slide.
+  - Leave off any explanation that `core_num` decides how many cores one inference uses. A single-core-compiled model still runs across multiple cores when several threads submit work, so that framing is unconvincing.
+  - Treat S600 as a special case. Do not present this as a general rule for other boards.
 
 ### Board facts
 
@@ -116,6 +120,8 @@ Style notes are in [references/style-notes.md](references/style-notes.md). The f
 - **Toolchain versions:** write 「以工具链文档为准」.
 
 ### Multi-core facts
+
+Background knowledge for checking a claim. Keep it off the slide. These measurements are an S600 special case, not a general rule.
 
 Verified on S600 with hrt_model_exec 3.13.6.
 
