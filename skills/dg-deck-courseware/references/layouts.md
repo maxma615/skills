@@ -74,6 +74,18 @@
 
 ## 新增（dg-deck 扩展，原版没有）
 
+### series-cover（新增，非原版）——系列课封面（第 1 页）
+系列课（如「RDK 小课堂」）每一讲的第 1 页都用它；视频平台封面（B 站 / YouTube 缩略图）用 `scripts/render_cover.py` 从**同一组字段、同一个模板**渲染，两者像素一致，不要另做封面、也不要手改。
+**字段**：
+- 必填：`chapter`（章号，整数）、`chapter_name`（章名，如 `Model Zoo`）、`lesson`（课号，整数）、`title`（课名；`\n` 换行，英文长标题常用，如 `"Meet the\nBPU"`）。
+- 可选：`highlight`（标题里要标橙的子串；也可在 title 里用 `==x==`）、`subtitle`（一行副标题）、`visual`（`bpu` 芯片 + MAC 阵列 | `quant` FP32→INT8 | 图片路径（相对 spec，按 contain 放进 600×600 视觉框）| `""` 不放）、`theme`（`light` 默认，系列标准样式 | `dark` | `orange`）、`badge`（右上角编号，默认 `<chapter>-<lesson 两位>`，如 `2-01`）、`series`（系列名，默认 zh「RDK 小课堂」/ en「RDK Classroom」）、`mock`（`true` 时底部加红色「MOCK-UP」条，只用于模板示意）、`nav`（导航/页脚标签，默认「封面」/「Cover」）。
+- 语言跟随 `meta.lang`：`en*` 用英文字标、`Chapter N · <name> | Lesson M`，拉丁文字用 DG Sans（Outfit）；其他为中文 `第 N 章 · <章名> ｜ 第 M 课`。
+**外观**：1920×1080，浅灰底（`#F4F5F7`）+ 右半部点阵和柔光；左上「地瓜机器人 | RDK 小课堂」字标，右上橙色编号胶囊；左栏 760px（x=280–1040）依次是章节行、200px 课名（highlight 部分橙色）、橙色短线、副标题；右侧 600×600 主视觉（x=1070–1670）。全部关键内容都在中间 4:3 安全区（x=240–1680）内。没有页角图标、页脚和右上角 tag。
+**动画**：字标淡入 → 编号弹出 → 章节行左滑 → 课名上浮 → 主视觉弹出 → 短线画出 → 副标题上浮，约 1.1 s 播完。字体加载后若需要缩字，会重新播放一次，保证入场动画完整。静态/打印/导出/减少动效时直接显示最终画面。
+**容量**：课名、副标题、章节行超出 760px 时自动缩小字号（最小 30px）；仍放不下时 `render.py` / `render_cover.py` 报 overflow。中文课名建议 ≤ 6 字；副标题 ≤ 约 16 字。
+**规则**：放在第 1 页（不是第 1 页时 build.py 会警告）。未写 `meta.title` 时自动生成系列标题：`【RDK 小课堂】第 N 章 <章名> · 第 M 课｜<课名>`（en：`[RDK Classroom] Chapter N <name> · Lesson M | <title>`），与视频标题一致。
+示例：`examples/series-cover.zh.json`、`examples/series-cover.en.json`。只有用到 series-cover 时才追加它的 CSS/JS；不用它的课件输出不变。
+
 ### diagram（新增，非原版）——可动画的 SVG 图解
 **字段**：`eyebrow`, `heading`, `height`（SVG 高度，默认 560；宽固定 1600）, `delay`（默认 450 ms）, `caption`（静态/最终字幕，默认取最后一步）, `scene[]`, `steps[]`。
 **scene 元素**（都要有唯一 `id`）：

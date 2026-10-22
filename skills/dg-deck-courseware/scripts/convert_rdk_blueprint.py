@@ -3,7 +3,12 @@
 (lesson Markdown -> blueprint -> HTML) into a dg-deck spec.
 
 usage: convert_rdk_blueprint.py blueprint.json -o spec.json [--tag "RDK 小课堂 1-01"] [--footer "社区与生态"]
+       [--chapter 2 --chapter-name "Model Zoo" --lesson 1 [--subtitle "…"] [--visual bpu|quant|img] [--highlight BPU]]
 Then:  build.py spec.json -o deck.html
+
+Series lessons: pass --chapter/--chapter-name/--lesson and slide 1 becomes a `series-cover` (the series cover
+style; the platform thumbnail is then rendered from the same fields with render_cover.py --spec spec.json).
+Its title is the blueprint cover title ([gradient] part = highlight); --subtitle is one short line.
 
 Pattern mapping (blueprint -> dg-deck):
   cover -> cover | cards-3/4/6/8 -> cards (cols 3/4/3/4) | split-checklist, checklist -> bullets(split, ✓)
@@ -179,12 +184,50 @@ def convert(bp, tag=None, footer=None):
     return out, warn
 
 
+def series_cover(spec, bp, a):
+    """Replace (or insert) slide 1 with a series-cover built from the blueprint cover + CLI fields."""
+    b = next((x for x in bp['slides'] if x.get('pattern') == 'cover'), {})
+    raw = a.cover_title or b.get('title', '')
+    m = re.search(r'\[gradient\](.*?)\[/gradient\]', raw)
+    title = re.sub(r'\[/?gradient\]', '', raw).strip()
+    if not title:
+        sys.exit('series cover: no title (blueprint cover has none; pass --cover-title)')
+    s = {'layout': 'series-cover', 'chapter': a.chapter, 'chapter_name': a.chapter_name, 'lesson': a.lesson,
+         'title': title}
+    hl = a.highlight or (m.group(1) if m else None)
+    if hl:
+        s['highlight'] = hl
+    if a.subtitle:                        # one short line; blueprint leads are usually too long for it
+        s['subtitle'] = a.subtitle
+    s['visual'] = a.visual
+    if b.get('notes'):
+        s['notes'] = b['notes']
+    sl = spec['slides']
+    if sl and sl[0]['layout'] == 'cover':
+        sl[0] = s
+    else:
+        sl.insert(0, s)
+    spec['meta'].pop('title', None)        # build.py derives the series title from the cover
+    spec['meta']['tag'] = a.tag or ('RDK Classroom' if spec['meta'].get('lang') == 'en' else 'RDK 小课堂') + f' {a.chapter}-{a.lesson:02d}'
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('blueprint'); ap.add_argument('-o', '--out', required=True)
     ap.add_argument('--tag'); ap.add_argument('--footer')
+    g = ap.add_argument_group('series cover (slide 1)')
+    g.add_argument('--chapter', type=int); g.add_argument('--chapter-name'); g.add_argument('--lesson', type=int)
+    g.add_argument('--cover-title'); g.add_argument('--highlight'); g.add_argument('--subtitle')
+    g.add_argument('--visual', default='bpu', help='bpu | quant | image path | "" (default bpu)')
     a = ap.parse_args()
-    spec, warn = convert(json.load(open(a.blueprint, encoding='utf-8')), a.tag, a.footer)
+    bp = json.load(open(a.blueprint, encoding='utf-8'))
+    spec, warn = convert(bp, a.tag, a.footer)
+    sc = [a.chapter is not None, bool(a.chapter_name), a.lesson is not None]
+    if any(sc) and not all(sc):
+        sys.exit('series cover needs all of --chapter, --chapter-name, --lesson')
+    if all(sc):
+        series_cover(spec, bp, a)
+        warn = [w for w in warn if '(cover)' not in w]
     with open(a.out, 'w', encoding='utf-8') as f:
         json.dump(spec, f, ensure_ascii=False, indent=2); f.write('\n')
     print(f'{a.blueprint}: {len(spec["slides"])} dg-deck slides -> {a.out}')

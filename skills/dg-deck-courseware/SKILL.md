@@ -33,8 +33,10 @@ On Windows, use `.venv\Scripts\python` instead of `.venv/bin/python`. To skip th
      - `examples/lesson-2-01.zh.json` reproduces the original 24-slide v3 deck exactly. It deliberately keeps the old X5U-only wording, so don't copy facts from it; use the board facts below.
      - `examples/layout-gallery.zh.json` shows every layout.
      - For a large deck, generate the spec from a small Python script, e.g. `make_spec.py` next to the deck, so revisions are reproducible.
-   - **From a blueprint made by `rdk-course-slides-generator`:** run `python scripts/convert_rdk_blueprint.py blueprint.json -o spec.json`, then review it. Blueprints carry no speaker notes, and an empty checklist renders as a heading only.
+   - **From a blueprint made by `rdk-course-slides-generator`:** run `python scripts/convert_rdk_blueprint.py blueprint.json -o spec.json`, then review it. For an RDK 小课堂 lesson add `--chapter N --chapter-name <章名> --lesson M` (optionally `--cover-title`, `--highlight`, `--subtitle`, `--visual`) so slide 1 becomes the series cover. Blueprints carry no speaker notes, and an empty checklist renders as a heading only.
    - **To edit an existing dg-deck HTML whose spec is lost:** run `python scripts/extract_spec.py deck.html -o spec.json`.
+   - **Slide 1 of every RDK 小课堂 deck (zh and en) is the `series-cover` layout.** Fill `chapter`, `chapter_name`, `lesson`, `title` and `highlight` (plus optional `subtitle` and `visual`: `bpu`, `quant` or `none`); the badge `N-MM` and the full title 【RDK 小课堂】第 N 章 <章名> · 第 M 课｜<课名> (en: [RDK Classroom] Chapter N <name> · Lesson M | <title>) are derived from those fields. Don't hand-edit the cover afterwards. See the `series-cover` section of [references/layouts.md](references/layouts.md).
+   - **Viewer UI language follows `meta.lang`.** The page-turn hint, prev/next labels and the empty-notes text are Chinese for `zh` and English for `en`; override single strings with `meta.ui`.
 2. **Add animated diagrams where a concept is about relationships, flow, scale or change.** Use the `diagram` layout; its field reference is in [references/layouts.md](references/layouts.md). Good targets:
    - CPU/BPU division of labour
    - a pipeline (preprocess, BPU, postprocess)
@@ -44,12 +46,13 @@ On Windows, use `.venv\Scripts\python` instead of `.venv/bin/python`. To skip th
    - quantization or calibration
    - the development flow
    - operator placement and fallback
-   - measured per-core load
+   - measured multi-thread latency and FPS
 3. **Build:** run `python scripts/build.py spec.json -o build/out.html`. It re-subsets the fonts automatically when new characters appear; `--resubset` forces it. Write output under `build/` or another directory outside `examples/`. The `build/` directory is gitignored.
 4. **Render and check.**
    - Run `python scripts/render.py build/out.html -o build/png --pdf build/out.pdf`. It writes per-slide PNGs, contact_sheet.png and an overflow report.
    - Look at the contact sheet and fix any overflow. In hand-written specs keep code lines to about 58 monospace characters; break long filenames after underscores.
    - Run `python scripts/smoke_test.py build/out.html`.
+   - **Platform thumbnail:** render it from the same template and the same fields as slide 1, e.g. `python scripts/render_cover.py --spec spec.json -o build/cover --thumbs`. It writes the 16:9 cover, a 4:3 crop and small thumbnails, and exits non-zero on overflow. Never design the thumbnail separately.
 5. **Preview the animations.** Run `python scripts/preview.py build/out.html -o build/preview/`; `--slides 9,22` limits it to those slides. It records an MP4 for each diagram slide plus a `*.frames.jpg` with one frame per second. `ffmpeg` must be on `PATH`.
    - Look at the frame sheets yourself before delivering.
    - Check for leftover white boxes, labels covered by moving tokens, invisible arrowheads, and blank captions.
@@ -82,9 +85,9 @@ Style notes are in [references/style-notes.md](references/style-notes.md). The f
 
 - The un-animated DOM is the final frame, with every element visible and nothing dimmed. That frame is what `?static=1`, `?print=1`, reduced-motion and PNG/PDF export show.
 
-**Diagrams must blend into the slide background.**
+**Everything blends into the slide background.**
 
-- Draw them directly on the page: no white card, panel, border or shadow around the diagram or any sub-panel, with only a soft edge fade.
+- Draw diagrams and info panels directly on the page: no white card, panel, border or shadow around a diagram or any sub-panel (e.g. a precision-cost note), with only a soft edge fade.
 - Grouping inside a diagram uses a faint dashed outline, not a filled white box.
 - Coloured CPU/BPU regions that are part of the drawing are fine.
 
@@ -100,11 +103,11 @@ Style notes are in [references/style-notes.md](references/style-notes.md). The f
 - **Layouts:**
   - Faithful to the original: cover, cards, section, bullets, code, flow, table, bars, links, closing.
   - Rebuilt, not original: agenda, compare, metrics, image-text, timeline, people, quote, podium.
-  - New: diagram.
+  - New: diagram, series-cover.
   - Say so if asked.
 - **Never invent numbers.**
   - Every figure on a slide must come from docs, the Model Zoo repo, or a real board test.
-  - Label each figure with its source, e.g. README reference vs 实测 plus the board and date. The S600 multi-thread performance slide below is the exception: leave the test date off that slide.
+  - Label each figure with its source, e.g. README reference vs 实测 plus the board. Put no test dates on slides.
   - Label illustrative visuals 「示意」.
   - When a claim from notes or a handoff is unverified, verify it (RDK docs connector, repo configs, or an on-board test) or drop it.
 - **S600 multi-core / multi-thread performance.** When a slide shows this, present only the measured latency and FPS for each thread count, for example 1, 4, and 12 threads.

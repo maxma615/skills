@@ -9,6 +9,9 @@ usage: build.py spec.json [-o out.html] [--resubset] [--no-subset-check]
 """
 import argparse, base64, html, io, json, math, os, re, sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import series_cover  # noqa: E402  (series-cover layout + render_cover.py share it)
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TPL = os.path.join(ROOT, 'assets', 'templates')
 ASSETS = os.path.join(ROOT, 'assets')
@@ -82,6 +85,7 @@ BG = {
     'stage': '<div class="bg bg-stage"><div class="glow-a"></div><div class="glow-b"></div></div>',
     'white': '<div class="bg bg-white"></div><div class="blob"></div>',
     'dark': '<div class="bg bg-dark"></div>',          # CSS exists in theme; not used in the 2-01 deck
+    'none': '',                                       # layout draws its own background (series-cover)
 }
 
 
@@ -753,17 +757,37 @@ def L_diagram(s, ctx):
 
 
 
+# NEW (2026-10): series cover, slide 1 of every lesson.  Same template/fields as scripts/render_cover.py.
+def L_series_cover(s, ctx):
+    meta = ctx.get('meta', {})
+    theme = s.get('theme', 'light')
+    ctx.setdefault('series_cover', [])
+    if theme not in ctx['series_cover']:
+        ctx['series_cover'].append(theme)
+    ctx['sc_n'] = ctx.get('sc_n', 0) + 1
+    logos = ctx.setdefault('sc_logo', {})
+
+    def logo_src(name):
+        if name not in logos:
+            logos[name] = 'data:image/png;base64,' + b64(os.path.join(ASSETS, 'brand', name))
+        return logos[name]
+    return series_cover.fragment(s, meta, lambda p: data_uri(p, ctx), logo_src, uid=f'sc{ctx["sc_n"]}')
+
+
 LAYOUTS = {'cover': L_cover, 'section': L_section, 'cards': L_cards, 'flow': L_flow, 'table': L_table,
            'bullets': L_bullets, 'code': L_code, 'bars': L_bars, 'links': L_links, 'closing': L_closing,
            # 重建，非原版
            'agenda': L_agenda, 'compare': L_compare, 'metrics': L_metrics, 'image-text': L_image_text,
            'timeline': L_timeline, 'people': L_people, 'quote': L_quote, 'podium': L_podium,
            # NEW (2026-10): animated SVG diagram
-           'diagram': L_diagram}
+           'diagram': L_diagram,
+           # NEW (2026-10): RDK 小课堂 series cover (slide 1)
+           'series-cover': L_series_cover}
 RECOVERED = ['cover', 'cards', 'section', 'bullets', 'code', 'flow', 'table', 'bars', 'links', 'closing']
 REBUILT = ['agenda', 'compare', 'metrics', 'image-text', 'timeline', 'people', 'quote', 'podium']
-NO_FOOT = {'cover', 'section', 'closing', 'quote'}
-DEFAULT_BG = {'cover': 'white'}
+NO_FOOT = {'cover', 'section', 'closing', 'quote', 'series-cover'}
+DEFAULT_BG = {'cover': 'white', 'series-cover': 'none'}
+NO_CHROME = {'series-cover'}   # no corner icon / top-right tag: the cover has its own logo lockup and N-MM badge
 
 
 def render_slide(s, i, n, meta, ctx):
@@ -771,12 +795,13 @@ def render_slide(s, i, n, meta, ctx):
     if lay not in LAYOUTS:
         sys.exit(f'slide {i + 1}: layout "{lay}" is not one of the recovered layouts: {", ".join(LAYOUTS)}')
     cls = 'slide' + (' dark' if s.get('dark') else '')
-    title = s.get('title', '')
+    title = series_cover.nav_title(s, meta) if lay == 'series-cover' else s.get('title', '')
     bg = BG[s.get('bg', 'dark' if s.get('dark') else DEFAULT_BG.get(lay, 'stage'))]
     out = f'<section class="{cls}" data-layout="{lay}" data-title="{attr(title)}">{bg}'
     out += LAYOUTS[lay](s, ctx)
-    out += '<i class="logo" aria-label="D-Robotics"></i>'
-    if meta.get('tag'):
+    if lay not in NO_CHROME:
+        out += '<i class="logo" aria-label="D-Robotics"></i>'
+    if meta.get('tag') and lay not in NO_CHROME:
         out += f'<div class="tag-tr"><i></i>{inl(meta["tag"])}</div>'
     if s.get('foot', lay not in NO_FOOT):
         out += (f'<div class="foot"><span>{inl(meta.get("footer", ""))} · <b>{inl(title)}</b></span>'
@@ -905,13 +930,47 @@ def fonts(chars, force_resubset, log):
     return res
 
 
+# ---------------------------------------------------------------- viewer UI strings
+# page.html / runtime.js carry {{UI_*}} placeholders; the language follows meta.lang ("en…" -> en, else zh).
+# meta.ui = {"hint", "prev", "next", "no_notes"} overrides single strings.
+UI_STRINGS = {
+    'zh': {'hint': '← / → / 空格 翻页 · 点击翻页 · N 备注 · F 全屏 · S 滚动版', 'prev': '上一页', 'next': '下一页',
+           'no_notes': '（本页无备注）'},
+    'en': {'hint': '← / → / Space to turn pages · click for next · N notes · F full screen · S scroll view',
+           'prev': 'Previous slide', 'next': 'Next slide', 'no_notes': '(No notes for this slide)'},
+}
+
+
+def ui_strings(meta):
+    lang = 'en' if str(meta.get('lang', 'zh-CN')).lower().startswith('en') else 'zh'
+    return {**UI_STRINGS[lang], **(meta.get('ui') or {})}
+
+
+def apply_ui(text, ui, js=False):
+    for k, v in ui.items():
+        if js:
+            v = html.escape(v, quote=False).replace('\\', '\\\\').replace("'", "\\'")
+        else:
+            v = html.escape(v, quote=False) if k == 'hint' else attr(v)
+        text = text.replace('{{UI_' + k.upper() + '}}', v)
+    return text
+
+
 # ---------------------------------------------------------------- main
 def build(spec, force_resubset=False, log=print, base_dir='.'):
-    meta, slides = spec['meta'], spec['slides']
+    meta, slides = dict(spec['meta']), spec['slides']
     n = len(slides)
+    covers = [s for s in slides if s['layout'] == 'series-cover']
+    for i, s in enumerate(slides):
+        if s['layout'] == 'series-cover':
+            series_cover.check(s, f'slide {i + 1} (series-cover)')
+    if 'title' not in meta and covers:
+        meta['title'] = series_cover.series_title(covers[0], meta)
+    if covers and slides[0]['layout'] != 'series-cover':
+        log('  ! series-cover is not slide 1')
     secs = [s for s in slides if s['layout'] == 'section']
     ctx = {'base_dir': base_dir, 'toc': [f'{s["num"]} · {s.get("toc_title", s.get("heading", ""))}' for s in secs],
-           'logo_full': b64(os.path.join(ASSETS, 'brand', meta.get('logo_full', 'd-robotics-logo-full.png')))}
+           'meta': meta, 'logo_full': b64(os.path.join(ASSETS, 'brand', meta.get('logo_full', 'd-robotics-logo-full.png')))}
     out, si = '', -1
     for i, s in enumerate(slides):
         if s['layout'] == 'section':
@@ -919,7 +978,8 @@ def build(spec, force_resubset=False, log=print, base_dir='.'):
         ctx['section_index'] = si
         out += render_slide(s, i, n, meta, ctx)
 
-    page = rd(os.path.join(TPL, 'page.html'))
+    ui = ui_strings(meta)
+    page = apply_ui(rd(os.path.join(TPL, 'page.html')), ui)
     ui_part = page[page.index('{{SLIDES}}') + len('{{SLIDES}}'):]
     chars = used_chars(out) | used_chars(ui_part.split('<script>')[0]) | set(meta['title']) | set(EXTRA_CHARS)
     f = fonts(chars, force_resubset, log)
@@ -931,13 +991,17 @@ def build(spec, force_resubset=False, log=print, base_dir='.'):
         css = css.rstrip('\n') + '\n' + rd(os.path.join(TPL, 'ext.css')).lstrip('\n') + '\n'
     if ctx.get('diagram'):
         css = css.rstrip('\n') + '\n' + rd(os.path.join(TPL, 'diagram.css')).lstrip('\n') + '\n'
+    if ctx.get('series_cover'):
+        css = css.rstrip('\n') + '\n' + series_cover.css(ctx['series_cover'])
     theme = ''.join(f'--dg-{k}:{v};' for k, v in (meta.get('theme') or {}).items())
     css += (rd(os.path.join(TPL, 'brand.css.tmpl'))
             .replace('{{THEME_VARS}}', theme)
             .replace('{{LOGO_PNG}}', b64(os.path.join(ASSETS, 'brand', meta.get('logo', 'd-robotics-icon.png'))))
             .replace('{{LOGO_DARK_PNG}}', b64(os.path.join(ASSETS, 'brand', meta.get('logo_dark', 'd-robotics-icon-dark.png')))))
     rep = {'{{LANG}}': attr(meta.get('lang', 'zh-CN')), '{{MODE}}': attr(meta.get('mode', 'deck')),
-           '{{BOOT_JS}}': rd(os.path.join(TPL, 'boot.js')), '{{RUNTIME_JS}}': rd(os.path.join(TPL, 'runtime.js')) + (rd(os.path.join(TPL, 'diagram.js')) + '\n' if ctx.get('diagram') else '')}
+           '{{BOOT_JS}}': rd(os.path.join(TPL, 'boot.js')), '{{RUNTIME_JS}}': apply_ui(rd(os.path.join(TPL, 'runtime.js')), ui, js=True)
+           + (rd(os.path.join(TPL, 'diagram.js')) + '\n' if ctx.get('diagram') else '')
+           + (series_cover.JS if ctx.get('series_cover') else '')}
     for k, v in rep.items():
         page = page.replace(k, v)
     page = page.replace('{{TITLE}}', attr(meta['title']))

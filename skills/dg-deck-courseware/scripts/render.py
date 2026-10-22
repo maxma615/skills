@@ -26,6 +26,8 @@ CHECK_JS = r"""
     if (r.right > sr.right + 1 || r.bottom > sr.bottom + 1 || r.left < sr.left - 1 || r.top < sr.top - 1)
       out.push(['off-slide', desc(e)]);
   }
+  for (const e of s.querySelectorAll('.sc .sc-fit'))   // series-cover: text that could not shrink into its column
+    if (e.scrollWidth > e.parentElement.clientWidth + 2) out.push(['overflow', desc(e)]);
   for (const b of s.querySelectorAll('.content,.card,.term,.tbody,.lk,.nl,.cl-card,.blist,table.tb,.bars,.note,.fs,.sec-left,.cv-left,.split,.cl')) {
     if (b.scrollHeight > b.clientHeight + 2 || b.scrollWidth > b.clientWidth + 2)
       out.push(['overflow', desc(b), `scroll ${b.scrollWidth}x${b.scrollHeight} > box ${b.clientWidth}x${b.clientHeight}`]);

@@ -54,6 +54,11 @@ def slide(sec):
     lay = sec['data-layout']
     s = {'layout': lay, 'title': sec['data-title']}
     notes = sec.select_one('aside.notes')
+    if lay == 'series-cover':   # fields are embedded by build.py; title/nav come from there
+        s = {'layout': lay, **json.loads(sec.select_one('script.sc-spec').string)}
+        if notes is not None:
+            s['notes'] = inner(notes)
+        return s
     if lay == 'section':
         s['num'] = inner(sec.select_one('.sec-num'))
         s['heading'] = inner(sec.select_one('.sec-title'))
@@ -162,7 +167,7 @@ def main():
     raw = re.sub(r'>( +)<', lambda m: '>' + WS * len(m.group(1)) + '<', raw)
     soup = BeautifulSoup(raw, 'html.parser')
     secs = soup.select('section.slide')
-    tag = secs[0].select_one('.tag-tr').get_text()
+    tag = next((x.select_one('.tag-tr').get_text() for x in secs if x.select_one('.tag-tr')), '')
     foot = next((x.select_one('.foot span') for x in secs if x.select_one('.foot')), None)
     footer = foot.contents[0].rstrip(' ·') if foot else ''
     spec = {'meta': {'title': soup.html['data-title'], 'lang': soup.html['lang'], 'mode': soup.html['data-mode'],

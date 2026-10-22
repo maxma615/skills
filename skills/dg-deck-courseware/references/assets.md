@@ -12,6 +12,7 @@ WOFF2 subsets extracted from the original lesson HTML. License: SIL OFL 1.1 (`as
 - `d-robotics-icon-dark.png`: the same icon drawn in white for `.slide.dark`. This white variant is self-made, not an official D-Robotics logo. Confirm it with design before any external use.
 - `d-robotics-logo-full.png` (800×193): the closing-slide 「地瓜机器人」 logo. It is the same file as `skills/rdk-course-slides-generator/assets/logo-cn.png`.
 - `d-robotics-logo-full-en.png`: the English closing-slide logo. It is the same file as `skills/rdk-course-slides-generator/assets/logo-en.png`. It was not in the original lesson HTML.
+- `d-robotics-logo-full-dark.png`, `d-robotics-logo-full-white.png`, `d-robotics-logo-full-en-dark.png`, `d-robotics-logo-full-en-white.png`: wordmark variants for the `series-cover` `dark` theme (`…-dark.png`) and `orange` theme (`…-white.png`) (the default `light` theme uses the two original files). These variants are self-made, not official D-Robotics files. Confirm them with design before any external use.
 - `d-robotics-logo-official.png`: a reference copy of the horizontal D-Robotics logo. `build.py` does not embed it.
 
 ## icons/
