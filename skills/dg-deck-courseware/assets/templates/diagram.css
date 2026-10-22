@@ -1,0 +1,88 @@
+
+/* ---------------- diagram (NEW layout, not in the original 2-01 file; emitted only when used) ---------------- */
+.dgm{position:relative;display:flex;flex-direction:column;gap:18px}
+.dgm svg.dg-svg{display:block;width:100%;background:none;overflow:hidden;
+  /* no card: draw straight on the slide background; soft edges so a camera push never shows a hard rectangle */
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%),linear-gradient(180deg,transparent 0,#000 22px,#000 calc(100% - 22px),transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%),linear-gradient(180deg,transparent 0,#000 22px,#000 calc(100% - 22px),transparent 100%);mask-composite:intersect}
+.dgm .cam{transform-origin:0 0;transform-box:view-box}
+.dgm text{font-family:var(--dg-font-body);fill:var(--dg-ink)}
+.dgm text.mono{font-family:var(--dg-font-mono)}
+.dgm text.disp{font-family:var(--dg-font-display)}
+.dgm .de{transition:opacity 600ms var(--dg-ease),transform 700ms var(--dg-ease);transform-box:fill-box;transform-origin:center}
+.dgm .de.pre{opacity:0;transform:translateY(18px)}
+.dgm .de.tk.pre,.dgm .de.ar.pre{transform:none}
+.dgm .de.bd.pre{opacity:0;transform:scaleX(0)}
+.dgm .de.bd{transform-origin:left center}
+.dgm svg.focusing .de:not(.f):not(.pre){opacity:.16}
+/* boxes */
+.dgm .bx rect.s{fill:#fff;stroke:#DADCE0;stroke-width:2.5;transition:fill 500ms var(--dg-ease),stroke 500ms var(--dg-ease)}
+.dgm .bx text{transition:fill 500ms var(--dg-ease)}
+.dgm .bx text.sub{fill:var(--dg-ink-3)}
+.dgm .bx .ic{color:var(--dg-ink-3);transition:color 500ms var(--dg-ease)}
+.dgm .bx[data-k=cpu] rect.s{stroke:#1A73E8;fill:#F5F9FF}.dgm .bx[data-k=cpu] text.lb{fill:#1967D2}.dgm .bx[data-k=cpu] .ic{color:#1A73E8}
+.dgm .bx[data-k=bpu] rect.s{stroke:#FF5A00;fill:#FFF6F0}.dgm .bx[data-k=bpu] text.lb{fill:#D84300}.dgm .bx[data-k=bpu] .ic{color:#FF5A00}
+.dgm .bx[data-k=frame] rect.s{fill:rgba(255,255,255,.16);stroke:#BDC1C6;stroke-dasharray:12 9}
+.dgm .bx[data-k=frame] text.lb{fill:var(--dg-ink-3)}
+.dgm .bx[data-k=ghost] rect.s{fill:rgba(255,255,255,.6);stroke:#DADCE0;stroke-dasharray:8 7}
+.dgm .bx[data-k=ghost] text.lb{fill:var(--dg-ink-4)}
+.dgm .bx.on[data-k=cpu] rect.s{fill:#1A73E8;stroke:#1A73E8}.dgm .bx.on[data-k=bpu] rect.s{fill:#FF5A00;stroke:#FF3C00}
+.dgm .bx.on[data-k=cpu] text,.dgm .bx.on[data-k=bpu] text{fill:#fff}.dgm .bx.on .ic{color:#fff}
+.dgm .bx.on[data-k=neutral] rect.s{fill:#E8EAED}
+.dgm .bx.sh rect.s{filter:drop-shadow(0 6px 16px rgba(60,64,67,.16))}
+/* text */
+.dgm .tx text{font-weight:500}
+.dgm .c-ink3{fill:var(--dg-ink-3)!important}.dgm .c-accent{fill:var(--dg-accent-deep)!important}.dgm .c-blue{fill:#1967D2!important}.dgm .c-ink4{fill:var(--dg-ink-4)!important}
+/* arrows */
+.dgm .ar path{fill:none;stroke:#BDC1C6;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.dgm .ar.o path{stroke:#FF5A00}.dgm .ar.b path{stroke:#1A73E8}
+.dgm .ar.draw path{stroke-dasharray:1 1;stroke-dashoffset:0;transition:stroke-dashoffset 900ms var(--dg-ease-decel)}
+.dgm .ar.draw.pre path{stroke-dashoffset:1}
+.dgm .ar.flow path{stroke-dasharray:10 12}
+html:not(.static) .slide.active .dgm .ar.flow:not(.pre) path{animation:dgm-march 900ms linear infinite}
+@keyframes dgm-march{to{stroke-dashoffset:-22}}
+/* tokens */
+.dgm .tk rect{fill:#202124}.dgm .tk text{fill:#fff;font-weight:700}
+.dgm .tk[data-k=bpu] rect{fill:#FF5A00}.dgm .tk[data-k=cpu] rect{fill:#1A73E8}.dgm .tk[data-k=light] rect{fill:#fff;stroke:#202124;stroke-width:2}.dgm .tk[data-k=light] text{fill:#202124}
+.dgm .tk .mv{filter:drop-shadow(0 6px 12px rgba(32,33,36,.25))}
+/* band */
+.dgm .bd rect{fill:rgba(255,90,0,.08);stroke:rgba(255,90,0,.9);stroke-width:3;stroke-dasharray:14 8}
+.dgm .bd.b rect{fill:rgba(26,115,232,.07);stroke:rgba(26,115,232,.85)}
+.dgm .bd text{font-weight:700;fill:#D84300}.dgm .bd.b text{fill:#1967D2}
+/* MAC grid */
+.dgm .gr rect.cell{fill:#FFE3D1;transition:fill 400ms var(--dg-ease);transition-delay:calc(var(--i) * 12ms)}
+.dgm .gr.on rect.cell{fill:#FF5A00}
+html:not(.static) .slide.active .dgm .gr.on rect.cell{animation:dgm-mac 1800ms ease-in-out infinite;animation-delay:calc(var(--i) * 30ms)}
+@keyframes dgm-mac{50%{fill:#FFB27A}}
+/* bytes */
+.dgm .by rect{fill:#DADCE0;rx:6px}.dgm .by[data-k=i8] rect{fill:#FF5A00}
+/* images (calibration thumbnails) */
+.dgm .im rect.f{fill:#E8F0FE;stroke:#AECBFA;stroke-width:2}.dgm .im path{fill:#8AB4F8}.dgm .im circle{fill:#FBBC04}
+.dgm .im g.t{transition:opacity 400ms var(--dg-ease),transform 500ms var(--dg-ease);transition-delay:calc(var(--i) * 70ms);transform-box:fill-box;transform-origin:center}
+.dgm .im.pre g.t{opacity:0;transform:scale(.6)}
+.dgm .im.pre{opacity:1;transform:none}
+/* caption */
+.dgm-cap{display:flex;align-items:center;gap:16px;min-height:44px;font:500 28px/1.4 var(--dg-font-body);color:var(--dg-ink-2);padding:0 8px}
+.dgm-cap i{width:12px;height:12px;border-radius:50%;background:var(--dg-accent);flex:none}
+.dgm-cap .st{margin-left:auto;display:flex;gap:8px}.dgm-cap .st b{width:28px;height:6px;border-radius:3px;background:#DADCE0;transition:background 400ms}
+.dgm-cap .st b.on{background:var(--dg-accent)}
+.dgm-cap .st{opacity:0;transition:opacity 400ms}.dgm.playing .dgm-cap .st{opacity:1}
+/* red = rejected / error */
+.dgm .bx[data-k=bad] rect.s{stroke:#D93025;fill:#FCE8E6}.dgm .bx[data-k=bad] text.lb{fill:#C5221F}.dgm .bx[data-k=bad] .ic{color:#D93025}
+.dgm .bx.on[data-k=bad] rect.s{fill:#D93025;stroke:#C5221F}.dgm .bx.on[data-k=bad] text{fill:#fff}
+.dgm .bx[data-k=ok] rect.s{stroke:#188038;fill:#E6F4EA}.dgm .bx[data-k=ok] text.lb{fill:#137333}
+.dgm .tk[data-k=bad] rect{fill:#D93025}
+.dgm .c-red{fill:#C5221F!important}.dgm .c-green{fill:#137333!important}
+/* photo */
+.dgm .ph image{filter:none}.dgm .ph rect.phx{fill:rgba(255,255,255,.5);stroke:#BDC1C6;stroke-width:2.5;stroke-dasharray:12 9}
+/* meter */
+.dgm .mt rect.trk{fill:rgba(60,64,67,.08)}
+.dgm .mt rect.fill{fill:#FF5A00;transform-box:fill-box;transform-origin:left center;transform:scaleX(0);transition:transform 1300ms var(--dg-ease-decel)}
+.dgm .mt[data-k=cpu] rect.fill{fill:#1A73E8}.dgm .mt[data-k=muted] rect.fill{fill:#BDC1C6}
+.dgm .mt.on rect.fill{transform:none}
+.dgm .mt text.v{opacity:0;transition:opacity 500ms var(--dg-ease) 700ms;fill:var(--dg-ink)}.dgm .mt.on text.v{opacity:1}
+/* histogram + levels */
+.dgm .hs rect{fill:#8AB4F8;transform-box:fill-box;transform-origin:center bottom;transition:transform 700ms var(--dg-ease),fill 500ms var(--dg-ease);transition-delay:calc(var(--i) * 18ms)}
+.dgm .hs.pre rect{transform:scaleY(0)}.dgm .hs.on rect{fill:#FF8A3D}
+.dgm .hs path.base{stroke:#BDC1C6;stroke-width:2}
+.dgm .lv path{stroke:#FF5A00;stroke-width:1.1;opacity:.75}

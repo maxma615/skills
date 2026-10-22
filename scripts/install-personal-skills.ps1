@@ -14,7 +14,8 @@ $skillNames = @(
     'rdk-course-slides-generator',
     'rdk-model-zoo-demo-review',
     'rdk-x5-toolchain-quantization',
-    'rdk-yolo-toolkit'
+    'rdk-yolo-toolkit',
+    'dg-deck-courseware'
 )
 
 if (-not (Test-Path -LiteralPath $RepositoryRoot -PathType Container)) {

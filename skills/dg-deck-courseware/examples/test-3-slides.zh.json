@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "title": "测试课件｜dg-deck 三页冒烟测试",
+    "lang": "zh-CN",
+    "tag": "dg-deck 测试",
+    "footer": "冒烟测试"
+  },
+  "slides": [
+    {
+      "layout": "cover",
+      "title": "封面",
+      "eyebrow": "dg-deck · 生成器自检",
+      "heading": "你好，==地瓜==",
+      "lead": "用一份 JSON 规格生成单文件离线课件：中文字体按需子集化，翻页、动画、打印全部保留。",
+      "tags": [{"text": "Test · 03 Slides", "dark": true}, "封面", "要点", "代码"],
+      "hero": {"center": "JSON", "caption": "一份规格", "nodes": ["编写规格", "构建 HTML", "渲染 PNG", "导出 PDF"]},
+      "notes": "这是封面备注：检查霓虹、鳄鱼、麒麟这些生僻一点的字能否正常显示。"
+    },
+    {
+      "layout": "bullets",
+      "title": "要点",
+      "variant": "split",
+      "eyebrow": "Checklist",
+      "heading": "构建前==检查清单==",
+      "lead": "每一条都对应 build.py 的一个功能。",
+      "items": [
+        {"mark": "check", "text": "字体：缺字时自动从系统 Noto Sans CJK 重新子集化"},
+        {"mark": "check", "text": "动画：逐行打字、分隔线绘制、卡片依次出现"},
+        {"mark": "info", "text": "模式：翻页、滚动版、打印版、静态版"},
+        {"mark": "x", "text": "不要手改生成的 HTML，改 JSON 后重新构建"},
+        {"mark": "note", "text": "麒麟、鳄鱼、饕餮：生僻字测试", "muted": true}
+      ],
+      "notes": "第二页备注。"
+    },
+    {
+      "layout": "code",
+      "title": "代码",
+      "eyebrow": "Build & Render",
+      "heading": "两条命令==出成品==",
+      "lead": "在 dg-deck 根目录执行。",
+      "blocks": [
+        {
+          "label": "① 构建",
+          "host": "jade@box: ~/dg-deck",
+          "lines": ["$ python3 scripts/build.py examples/test.json \\", "  -o build/test.html", {"text": "-> build/test.html (420 KB)", "out": true}],
+          "note": {"k": "要点", "p": "缺字会触发重新子集化，日志里会写明。"}
+        },
+        {
+          "label": "② 渲染",
+          "host": "jade@box: ~/dg-deck",
+          "lines": [{"text": "$ python3 scripts/render.py build/test.html --pdf t.pdf", "hl": true}, "# 输出 png/、contact_sheet.png 和 PDF"],
+          "note": {"k": "提示", "p": "退出码 2 表示溢出检查发现问题。"}
+        }
+      ],
+      "notes": "第三页备注：代码页。"
+    }
+  ]
+}

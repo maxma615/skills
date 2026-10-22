@@ -1,0 +1,9 @@
+
+/* ---------------- dg-deck extensions (NOT in the original 2-01 file; only emitted when a slide uses them) ---------------- */
+.grid.dense{gap:24px}
+.grid.dense .card{padding:26px 30px 28px}
+.grid.dense .card h3{font-size:30px;margin-top:14px}
+.grid.dense .card p{font-size:23px;line-height:1.5;margin-top:6px}
+.grid.dense .ico{width:54px;height:54px;border-radius:16px}.grid.dense .ico svg{width:28px;height:28px}
+.code-row.wide .note{padding-top:0}
+.code-rows.dense{gap:24px}.code-rows.dense .tbody{padding:20px 40px 22px}.code-rows.dense .ln{font-size:23px;line-height:36px}
