@@ -1,0 +1,40 @@
+{
+ "meta": {
+  "title": "[RDK Classroom] Chapter 2 Model Zoo · Lesson 1 | Meet the BPU",
+  "lang": "en",
+  "tag": "RDK Classroom 2-01",
+  "footer": "Meet the BPU",
+  "logo_full": "d-robotics-logo-full-en.png"
+ },
+ "slides": [
+  {
+   "layout": "series-cover",
+   "chapter": 2,
+   "chapter_name": "Model Zoo",
+   "lesson": 1,
+   "title": "Meet the\nBPU",
+   "highlight": "BPU",
+   "subtitle": "Why convert + quantize first?",
+   "visual": "bpu",
+   "notes": "Cover: chapter 2, lesson 1."
+  },
+  {
+   "layout": "section",
+   "title": "What is the BPU",
+   "num": "01",
+   "heading": "What is the BPU",
+   "sub": "How the CPU and BPU split the work"
+  },
+  {
+   "layout": "bullets",
+   "variant": "numbered",
+   "title": "In this lesson",
+   "heading": "In this lesson",
+   "items": [
+    "What the BPU is",
+    "Why convert and quantize first",
+    "Watch the BPU work on the board"
+   ]
+  }
+ ]
+}

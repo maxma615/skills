@@ -52,7 +52,7 @@
     enter(next); index = i;
     if (page) page.textContent = `${i + 1} / ${slides.length}`;
     if (progress) progress.style.width = `${(i + 1) / slides.length * 100}%`;
-    if (notesPanel) { const n = next.querySelector('.notes'); notesPanel.innerHTML = `<b>${i + 1}</b>` + (n ? n.innerHTML : '<i>（本页无备注）</i>'); }
+    if (notesPanel) { const n = next.querySelector('.notes'); notesPanel.innerHTML = `<b>${i + 1}</b>` + (n ? n.innerHTML : '<i>{{UI_NO_NOTES}}</i>'); }
     if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
     document.title = (next.dataset.title ? next.dataset.title + ' · ' : '') + root.dataset.title;
   }

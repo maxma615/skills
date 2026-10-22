@@ -1,0 +1,39 @@
+{
+ "meta": {
+  "title": "【RDK 小课堂】第 2 章 Model Zoo · 第 1 课｜认识 BPU",
+  "lang": "zh-CN",
+  "tag": "RDK 小课堂 2-01",
+  "footer": "认识 BPU"
+ },
+ "slides": [
+  {
+   "layout": "series-cover",
+   "chapter": 2,
+   "chapter_name": "Model Zoo",
+   "lesson": 1,
+   "title": "认识 BPU",
+   "highlight": "BPU",
+   "subtitle": "为什么要先转换 + 量化才能上板",
+   "visual": "bpu",
+   "notes": "封面：第 2 章第 1 课。"
+  },
+  {
+   "layout": "section",
+   "title": "BPU 是什么",
+   "num": "01",
+   "heading": "BPU 是什么",
+   "sub": "CPU 和 BPU 怎么分工"
+  },
+  {
+   "layout": "bullets",
+   "variant": "numbered",
+   "title": "本课要点",
+   "heading": "本课要点",
+   "items": [
+    "BPU 是什么",
+    "为什么要先转换和量化",
+    "上板看 BPU 干活"
+   ]
+  }
+ ]
+}

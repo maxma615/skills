@@ -4,13 +4,15 @@
 {
   "meta": {
     "title": "RDK 小课堂｜第二章 第 1 课：认识 BPU",   // <title> + html[data-title]; document.title = "<slide title> · <meta.title>"
-    "lang": "zh-CN",            // html[lang]
+                                // optional when slide 1 is series-cover: defaults to the series title (see below)
+    "lang": "zh-CN",            // html[lang]; also picks the viewer UI language (en* → English, else Chinese)
     "mode": "deck",             // html[data-mode] default mode: deck | scroll
     "tag": "RDK 小课堂 2-01",    // top-right tag on every slide
     "footer": "认识 BPU",        // footer left part: "<footer> · <b><slide.title></b>"
     "theme": {},                // token overrides → ":root{--dg-<k>:<v>;}"  e.g. {"accent":"#1A73E8"}
     "logo": "d-robotics-icon.png", "logo_dark": "d-robotics-icon-dark.png",      // assets/brand/ (optional)
-    "logo_full": "d-robotics-logo-full.png"                                     // closing-slide logo (…-en.png for English)
+    "logo_full": "d-robotics-logo-full.png",                                    // closing-slide logo (…-en.png for English)
+    "ui": {}                    // optional viewer-string overrides: {"hint","prev","next","no_notes"}
   },
   "slides": [ { "layout": "cover", "title": "封面", "notes": "…", … }, … ]
 }
@@ -47,3 +49,9 @@ If a source font is missing, chars fall back to the CSS stack (PingFang SC / Mic
 
 ## Layout `diagram` (NEW — dg-deck extension, not in the original)
 Animated SVG explainer. Field reference: references/layouts.md → "diagram". The un-animated DOM is the final frame, so static/print/reduced-motion/export all show it. The timeline JSON is embedded per slide (`script.dgm-tl`). `assets/templates/diagram.css` and `assets/templates/diagram.js` are included only when a diagram slide exists.
+
+## Viewer UI language
+The page hint (翻页 / turn pages), the prev/next button labels and the empty-notes text follow `meta.lang`: `en`, `en-US`, … → English; anything else → Chinese (the original strings, so zh decks are unchanged). Override single strings with `meta.ui` (`hint`, `prev`, `next`, `no_notes`).
+
+## Layout `series-cover` (NEW — series cover, slide 1)
+Fields: `chapter`, `chapter_name`, `lesson`, `title` (required); `highlight`, `subtitle`, `visual`, `theme`, `badge`, `series`, `mock`, `nav` (optional). The cover text is `title`; the nav/footer label is `nav` (default 封面 / Cover). Language follows `meta.lang`. Missing required fields stop the build. Reference: references/layouts.md → "series-cover". The platform thumbnail is rendered from the same slide by `scripts/render_cover.py --spec <deck.json>`.
