@@ -8,6 +8,7 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.venv/
 node_modules/
 
 # Skill build outputs
@@ -45,9 +46,13 @@ archive/
 !/skills/rdk-x5-toolchain-quantization/**
 !/skills/rdk-yolo-toolkit/
 !/skills/rdk-yolo-toolkit/**
+!/skills/dg-deck-courseware/
+!/skills/dg-deck-courseware/**
 
-# Keep validation bytecode out of the published RDK course Skill.
+# Keep validation bytecode out of published course Skills.
 /skills/rdk-course-slides-generator/**/__pycache__/
+/skills/dg-deck-courseware/**/__pycache__/
+/skills/dg-deck-courseware/assets/fonts/sources/
 /projects/*
 !/projects/.gitkeep
 /shared/*

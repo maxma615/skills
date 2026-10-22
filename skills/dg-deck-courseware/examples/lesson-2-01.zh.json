@@ -1,0 +1,700 @@
+{
+  "meta": {
+    "title": "RDK 小课堂｜第二章 第 1 课：认识 BPU",
+    "lang": "zh-CN",
+    "mode": "deck",
+    "tag": "RDK 小课堂 2-01",
+    "footer": "认识 BPU",
+    "theme": {}
+  },
+  "slides": [
+    {
+      "layout": "cover",
+      "title": "封面",
+      "eyebrow": "RDK 小课堂 · 第二章 Model Zoo",
+      "heading": "认识 ==BPU==",
+      "lead": "为什么你的模型要先“转换 + 量化”才能上板？一个视频讲清 RDK X5 / S100 / S100P / S600 四块板。",
+      "tags": [
+        {
+          "text": "Chapter 2 · Lesson 01 · RDK Course",
+          "dark": true
+        },
+        "RDK X5",
+        "RDK S100",
+        "RDK S100P",
+        "RDK S600",
+        "Model Zoo"
+      ],
+      "hero": {
+        "center": "BPU",
+        "caption": "神经网络推理单元",
+        "nodes": [
+          "CPU 前处理",
+          "BPU 推理",
+          "量化编译",
+          "板端实测"
+        ]
+      },
+      "notes": "大家好，欢迎来到 RDK 小课堂第二章。这一章我们讲 Model Zoo，第一节课，先来认识 BPU。第一章里，我们已经把板子跑起来了，也用过摄像头和屏幕。那接下来，怎么让板子真正\"看懂\"画面呢？靠的就是芯片里专门跑神经网络的单元：BPU。这节课一个视频，同时讲四块板：RDK X5、S100、S100P 和 S600。"
+    },
+    {
+      "layout": "cards",
+      "title": "本课问题",
+      "eyebrow": "Why This Lesson",
+      "heading": "本课回答==三个问题==",
+      "lead": "同一个 ResNet-18：X5 上纯推理约 2.7 ms，S600 上约 0.39 ms。电脑上的 .pt 为什么不能直接拷到板上跑？",
+      "cols": 3,
+      "cards": [
+        {
+          "num": "01",
+          "title": "BPU 是什么",
+          "text": "专门跑神经网络的单元，它和 CPU 怎么分工？"
+        },
+        {
+          "num": "02",
+          "title": "为什么要转换 + 量化",
+          "text": "浮点模型为什么要先量化、编译，才能上板？"
+        },
+        {
+          "num": "03",
+          "title": "怎么看到 BPU 干活",
+          "text": "在板上用一条命令看模型信息和推理速度。"
+        }
+      ],
+      "notes": "先看一个反差。同一个 ResNet-18 分类模型，在 RDK X5 上纯推理大约 2.7 毫秒，在 S600 上大约只要 0.39 毫秒。可是，你在电脑上训练好的 .pt 文件，为什么不能直接拷到板子上跑呢？带着这个疑问，这节课我们回答三个问题：第一，BPU 是什么；第二，为什么模型要先经过转换和量化，才能上板；第三，怎么在板子上，亲眼看到 BPU 在干活。"
+    },
+    {
+      "layout": "links",
+      "title": "配套资源",
+      "eyebrow": "Resources",
+      "heading": "课程资料与官方入口",
+      "items": [
+        {
+          "k": "RDK Model Zoo",
+          "d": "本章主角：转换好的模型、推理代码和转换配方",
+          "url": "https://github.com/D-Robotics/rdk_model_zoo"
+        },
+        {
+          "k": "RDK 文档资源中心",
+          "d": "各板卡手册与算法工具链文档",
+          "url": "https://developer.d-robotics.cc/rdk_doc_center/"
+        },
+        {
+          "k": "X5 · PTQ 转换原理及流程",
+          "d": "五个阶段、量化、校准、算子检查",
+          "url": "https://developer.d-robotics.cc/oe_x5_doc/cn/oe_mapper/source/ptq/ptq_workflow.html"
+        },
+        {
+          "k": "S 系列 · hb_compile 工具",
+          "d": "S100 / S100P / S600 的模型验证与编译",
+          "url": "https://developer.d-robotics.cc/oe_s_doc/guide/ptq/ptq_tool/hb_compile"
+        },
+        {
+          "k": "hrt_model_exec 工具介绍",
+          "d": "板端查看模型信息、测性能",
+          "url": "https://developer.d-robotics.cc/oe_s_doc/guide/ucp/runtime/tool_introduction/hrt_model_exec"
+        },
+        {
+          "k": "RDK 课程 Demo（中文）",
+          "d": "中文讲义和课程 Demo",
+          "url": "https://d-robotics.github.io/rdk-course-demos/zh/"
+        }
+      ],
+      "notes": "开始之前，先把资料准备好。本章的主角，是 GitHub 上的 RDK Model Zoo。遇到概念问题，就去文档资源中心，查算法工具链的文档：X5 看\"PTQ 转换原理及流程\"，S 系列看\"hb_compile 工具\"这一页；板端命令的用法，在\"hrt_model_exec 工具介绍\"里。这节课不需要电脑端的工具链，只要你的板子能 SSH 登录、能联网就可以。"
+    },
+    {
+      "layout": "section",
+      "title": "章节 01",
+      "num": "01",
+      "heading": "BPU 是什么",
+      "sub": "CPU 和 BPU 怎么分工，四块板各是什么架构"
+    },
+    {
+      "layout": "cards",
+      "title": "分工",
+      "eyebrow": "Division of Labor",
+      "heading": "CPU、BPU、GPU 怎么分工",
+      "lead": "BPU（Brain Processing Unit）是 D-Robotics 芯片里专门加速神经网络推理的单元。",
+      "cols": 3,
+      "cards": [
+        {
+          "icon": "terminal",
+          "tone": "blue",
+          "title": "CPU",
+          "text": "通用逻辑、前处理和后处理，比如缩放、画框、NMS。"
+        },
+        {
+          "icon": "network",
+          "tone": "orange",
+          "title": "BPU",
+          "text": "卷积、矩阵乘这类大量重复的定点计算。",
+          "focus": true
+        },
+        {
+          "icon": "film",
+          "tone": "green",
+          "title": "GPU",
+          "text": "S100 上有 Mali-G78AE，不是本章重点。"
+        }
+      ],
+      "notes": "先说 BPU 是什么。BPU，全称 Brain Processing Unit，是 D-Robotics 芯片里，专门加速神经网络推理的单元。Model Zoo 的定位，就是运行在 BPU 上的 AI 模型部署示例。那它和 CPU 怎么分工呢？简单说：CPU 负责通用逻辑，还有前处理和后处理，比如缩放图片、画框、做 NMS；BPU 负责卷积、矩阵乘这类大量重复的定点计算。S100 上还有一块 Mali GPU，不过它不是本章的重点。"
+    },
+    {
+      "layout": "flow",
+      "title": "流水线",
+      "eyebrow": "Pipeline",
+      "heading": "一帧画面怎么==走完==",
+      "steps": [
+        {
+          "t": "摄像头",
+          "s": "采集图像"
+        },
+        {
+          "t": "CPU 前处理",
+          "s": "缩放、转 NV12"
+        },
+        {
+          "t": "BPU 推理",
+          "s": "BPU 子图",
+          "on": true
+        },
+        {
+          "t": "CPU 后处理",
+          "s": "画框、NMS"
+        },
+        {
+          "t": "屏幕",
+          "s": "显示结果"
+        }
+      ],
+      "notes": "把这个分工放到一帧画面里看，就是这样一条流水线：摄像头采到图像，CPU 先做缩放，转成 NV12 格式；然后交给 BPU 做推理；推理结果再回到 CPU 做后处理，比如画框和 NMS；最后显示到屏幕上。你会发现，BPU 只负责中间最重的那一段。"
+    },
+    {
+      "layout": "cards",
+      "title": "异构模型",
+      "eyebrow": "Heterogeneous Model",
+      "heading": "模型不一定全在 BPU 上",
+      "cols": 3,
+      "cards": [
+        {
+          "icon": "layers",
+          "tone": "orange",
+          "title": "混合异构模型",
+          "text": "工具链把模型切成 BPU 子图和 CPU 节点。"
+        },
+        {
+          "icon": "list-checks",
+          "tone": "blue",
+          "title": "逐个列出",
+          "text": "检查工具会列出每个算子在 BPU 还是 CPU，例如 fc7 BPU、prob(Softmax) CPU。"
+        },
+        {
+          "icon": "search",
+          "tone": "green",
+          "title": "先看分配",
+          "text": "后面板块三会在电脑端实际跑检查工具。"
+        }
+      ],
+      "notes": "还要注意一点：一个模型，不一定全部在 BPU 上跑。工具链会把模型切成 BPU 子图和 CPU 节点，这叫\"混合异构模型\"。模型检查工具会逐个告诉你，哪个算子放在 BPU，哪个放在 CPU。比如一个分类模型，全连接层 fc7 在 BPU，最后的 Softmax 在 CPU。这个检查工具在电脑端运行，我们放到板块三再实际操作。"
+    },
+    {
+      "layout": "table",
+      "title": "四块板",
+      "eyebrow": "Four Boards",
+      "heading": "四块板的 ==BPU 一览==",
+      "lead": "记住自己板子的架构名（march）和模型格式，后面每一课都会用到。",
+      "head": [
+        "板卡",
+        "BPU 架构",
+        "march",
+        "核数",
+        "算力",
+        "转换工具 → 模型格式"
+      ],
+      "rows": [
+        [
+          "<b>RDK X5</b>",
+          "Bayes-e",
+          "<span class=\"mono\">bayes-e</span>",
+          "1 核",
+          {
+            "html": "10 TOPS",
+            "cls": "hc"
+          },
+          "<span class=\"mono\">hb_mapper</span> → <span class=\"chip\">.bin</span>"
+        ],
+        [
+          "<b>RDK S100</b>",
+          "Nash-e",
+          "<span class=\"mono\">nash-e</span>",
+          "1 核",
+          {
+            "html": "80 TOPS",
+            "cls": "hc"
+          },
+          "<span class=\"mono\">hb_compile</span> → <span class=\"chip blue\">.hbm</span>"
+        ],
+        [
+          "<b>RDK S100P</b>",
+          "Nash-m",
+          "<span class=\"mono\">nash-m</span>",
+          "1 核",
+          {
+            "html": "128 TOPS",
+            "cls": "hc"
+          },
+          "<span class=\"mono\">hb_compile</span> → <span class=\"chip blue\">.hbm</span>"
+        ],
+        [
+          "<b>RDK S600</b>",
+          "Nash-p",
+          "<span class=\"mono\">nash-p</span>",
+          "4 核",
+          {
+            "html": "最高 560 TOPS",
+            "cls": "hc"
+          },
+          "<span class=\"mono\">hb_compile</span> → <span class=\"chip blue\">.hbm</span>"
+        ]
+      ],
+      "notes": "接下来，认一认四块板的 BPU。RDK X5 的架构叫 Bayes-e，单核，10 TOPS，用 hb_mapper 转换，板端模型是 .bin。S100 是 Nash-e，单核，80 TOPS；S100P 是 Nash-m，单核，128 TOPS；S600 是 Nash-p，有四个 BPU 核，最高 560 TOPS。这三块 S 系列板，都用 hb_compile 转换，板端模型是 .hbm，而且用的是同一个工具链镜像。至于工具链的版本号，以工具链文档为准。"
+    },
+    {
+      "layout": "bullets",
+      "title": "不能混用",
+      "eyebrow": "Model Format",
+      "heading": "模型格式==不能混用==",
+      "lead": "S 系列三块板用同一个工具链镜像；版本号以工具链文档为准。",
+      "variant": "split",
+      "items": [
+        {
+          "mark": "x",
+          "text": "X5 的 .bin 不能在 S 系列上跑"
+        },
+        {
+          "mark": "x",
+          "text": "S100P 也不能用 S100 的 .hbm"
+        },
+        {
+          "mark": "x",
+          "text": "禁止把 .hbm 改后缀冒充 .bin"
+        },
+        {
+          "mark": "info",
+          "text": "X5 输入：一个 packed NV12 张量"
+        },
+        {
+          "mark": "info",
+          "text": "S 系列输入：Y、UV 两个张量"
+        },
+        {
+          "mark": "note",
+          "text": "例外：X5 走 QAT 产出 .hbm，本章不展开",
+          "muted": true
+        }
+      ],
+      "notes": "这里有几条一定要记住。第一，四块板的模型不能混用：X5 的 .bin，不能在 S 系列上跑；S100P 也不能直接用 S100 的 .hbm。第二，千万别把 .hbm 改个后缀，冒充 .bin，这是明确禁止的。第三，输入形式也不一样：Model Zoo 里，X5 的模型输入是一个 packed NV12 张量，S 系列是 Y 和 UV 分开的两个张量。另外提一句例外：本课程的主线是 PTQ，X5 走 PTQ 产出 .bin；如果 X5 改走 QAT，产出的是 .hbm，那是另一条流程，本章不展开。"
+    },
+    {
+      "layout": "code",
+      "title": "认清板卡",
+      "eyebrow": "Board Check",
+      "heading": "先认清手上的板子",
+      "lead": "两条命令四块板通用，读的文件和 Model Zoo 自动识别板卡一致。",
+      "blocks": [
+        {
+          "label": "① BPU 有几个核",
+          "lines": [
+            "$ cat /sys/devices/system/bpu/core_num",
+            "$ ls /sys/devices/system/bpu/"
+          ],
+          "note": {
+            "k": "要点",
+            "p": "X5、S100、S100P 输出 1；S600 输出 4，能看到 bpu0..bpu3。"
+          }
+        },
+        {
+          "label": "② 板卡身份",
+          "lines": [
+            "$ cat /sys/class/boardinfo/soc_name \\",
+            "  /sys/class/socinfo/soc_name \\",
+            "  2>/dev/null | tr -d '\\0'"
+          ],
+          "note": {
+            "k": "要点",
+            "p": "X5 → X5U；S 系列 → S100 / S100P / S600。--target auto 就靠它。"
+          }
+        }
+      ],
+      "notes": "那怎么确认自己手上是哪块板呢？两条命令。第一条，cat 一下 core_num，看 BPU 有几个核：X5、S100、S100P 都是 1，S600 是 4，还能看到 bpu0 到 bpu3 四个目录。第二条，读 soc_name：X5 会输出 X5U，S 系列分别输出 S100、S100P、S600。这条命令读的文件和顺序，跟 Model Zoo 自动识别板卡的逻辑是一样的。所以跑 sample 的时候，target 设成 auto，它就能自己判断，平时不用手动指定。"
+    },
+    {
+      "layout": "section",
+      "title": "章节 02",
+      "num": "02",
+      "heading": "为什么要转换和量化",
+      "sub": "float32 → int8，PTQ 与 QAT"
+    },
+    {
+      "layout": "cards",
+      "title": "量化",
+      "eyebrow": "Quantization",
+      "heading": "为什么要==转换 + 量化==",
+      "cols": 3,
+      "cards": [
+        {
+          "icon": "zap",
+          "tone": "orange",
+          "title": "float32 → int8",
+          "text": "每个数从 4 字节变成 1 字节，计算量大大减少。",
+          "extra_html": "<div style=\"display:flex;align-items:center;gap:8px;margin-top:26px\"><span class=\"mono\" style=\"font-size:20px;color:var(--dg-ink-3);margin-right:4px\">float32</span><i style=\"width:30px;height:30px;border-radius:6px;background:#DADCE0\"></i><i style=\"width:30px;height:30px;border-radius:6px;background:#DADCE0\"></i><i style=\"width:30px;height:30px;border-radius:6px;background:#DADCE0\"></i><i style=\"width:30px;height:30px;border-radius:6px;background:#DADCE0\"></i><span style=\"font:600 28px var(--dg-font-display);color:var(--dg-ink-4);margin:0 10px\">→</span><span class=\"mono\" style=\"font-size:20px;color:var(--dg-ink-3);margin-right:4px\">int8</span><i style=\"width:30px;height:30px;border-radius:6px;background:var(--dg-accent)\"></i></div>"
+        },
+        {
+          "icon": "target",
+          "tone": "blue",
+          "title": "精度代价",
+          "text": "大部分典型模型的精度损失能控制在 1% 以内。"
+        },
+        {
+          "icon": "flask",
+          "tone": "green",
+          "title": "校准",
+          "text": "用一小批代表性图片统计每层数值范围：X5 文档建议 20–100 张，ResNet 用固定 200 张。"
+        }
+      ],
+      "notes": "好，第二个问题：为什么要转换和量化？训练出来的模型是 float32，每个数占 4 个字节；量化成 int8 之后，每个数只占 1 个字节，计算量大大减少。代价是，精度可能会下降。官方的说法是，大部分典型模型的精度损失，能控制在百分之一以内。那量化参数怎么定？靠校准：用一小批有代表性的图片，统计每一层的数值范围。X5 文档建议准备 20 到 100 张；Model Zoo 的 ResNet，用的是 COCO 里固定的 200 张图。"
+    },
+    {
+      "layout": "cards",
+      "title": "精度",
+      "eyebrow": "Accuracy",
+      "heading": "量化后精度怎么看",
+      "cols": 2,
+      "row": true,
+      "cards": [
+        {
+          "icon": "target",
+          "tone": "orange",
+          "title": "余弦相似度",
+          "text": "各输出节点建议 ≥ 0.999，最低不低于 0.99。"
+        },
+        {
+          "icon": "list-checks",
+          "tone": "blue",
+          "title": "ResNet-18 实例",
+          "text": "浮点 Top-1 59.35%；X5 板端 58.91%；S100 板端 58.79%。"
+        },
+        {
+          "icon": "zap",
+          "tone": "green",
+          "title": "PTQ 训练后量化",
+          "text": "本章主线，默认先走 PTQ。"
+        },
+        {
+          "icon": "graduation-cap",
+          "tone": "yellow",
+          "title": "QAT 量化感知训练",
+          "text": "要重新训练、门槛更高；PTQ 调优后仍不达标再考虑。"
+        }
+      ],
+      "notes": "量化完，精度怎么看？Model Zoo 建议，各输出节点的余弦相似度最好达到 0.999，最低也不要低于 0.99。看个实例：ResNet-18 浮点模型的 Top-1 准确率是 59.35%，X5 板端是 58.91%，S100 板端是 58.79%，掉得很少。量化有两条路线：PTQ，训练后量化，是本章主线，默认先走它；QAT，量化感知训练，要重新训练，门槛更高，只有明确需要，或者 PTQ 调优后还不达标，才去考虑。"
+    },
+    {
+      "layout": "flow",
+      "title": "五个阶段",
+      "eyebrow": "Workflow",
+      "heading": "官方开发流程==五个阶段==",
+      "steps": [
+        {
+          "t": "浮点模型准备",
+          "s": "PyTorch 等框架训练"
+        },
+        {
+          "t": "模型验证",
+          "s": "检查算子分配"
+        },
+        {
+          "t": "模型转换",
+          "s": "优化 + 量化 + 编译"
+        },
+        {
+          "t": "性能评估",
+          "s": "板端实测"
+        },
+        {
+          "t": "精度评估",
+          "s": "对比浮点"
+        }
+      ],
+      "notes": "把整件事串起来，官方把它分成五个阶段：浮点模型准备、模型验证、模型转换、性能评估、精度评估。其中\"模型转换\"又包括优化、量化和编译三步。注意，工具链本身不负责训练，训练还是用 PyTorch 这类框架来做。"
+    },
+    {
+      "layout": "table",
+      "title": "两条工具线",
+      "eyebrow": "Toolchain",
+      "heading": "两条板卡线的工具",
+      "lead": "转换在 x86 电脑的官方 Docker 里做，不在板上做。",
+      "head": [
+        {
+          "html": "步骤",
+          "style": "width:250px"
+        },
+        "RDK X5",
+        "S 系列（S100 / S100P / S600）"
+      ],
+      "row_header": true,
+      "rows": [
+        [
+          "导出",
+          {
+            "html": "四块板一样：PyTorch 导出 ONNX。",
+            "colspan": 2
+          }
+        ],
+        [
+          "模型检查",
+          "<span class=\"cmd\">hb_mapper checker --march bayes-e</span>",
+          "<span class=\"cmd\">hb_compile -m &lt;model&gt; --march nash-*</span>"
+        ],
+        [
+          "量化编译",
+          "<span class=\"cmd\">hb_mapper makertbin</span> → .bin",
+          "<span class=\"cmd\">hb_config_generator</span> + <span class=\"cmd\">hb_compile -c</span> → .hbm"
+        ],
+        [
+          "板端推理",
+          {
+            "html": "四块板统一用 Python 的 hbm_runtime，或 C/C++ 接口。",
+            "colspan": 2
+          }
+        ]
+      ],
+      "notes": "落到具体工具，分两条板卡线。导出这一步都一样，从 PyTorch 导出 ONNX。模型检查：X5 用 hb_mapper checker，S 系列用 hb_compile 加上 march 参数。量化编译：X5 用 hb_mapper makertbin 生成 .bin；S 系列先用 hb_config_generator 生成配置文件，再用 hb_compile 生成 .hbm。这些转换都在 x86 电脑上的官方 Docker 里完成，不在板子上做。到了板端推理，四块板都可以用 Python 的 hbm_runtime，本课程也统一按 hbm_runtime 来讲。"
+    },
+    {
+      "layout": "cards",
+      "title": "Model Zoo",
+      "eyebrow": "Model Zoo",
+      "heading": "Model Zoo 帮你省掉什么",
+      "lead": "以 `samples/vision/resnet/` 为例：`model/`、`conversion/`、`runtime/` 三个目录。",
+      "cols": 3,
+      "cards": [
+        {
+          "icon": "grid",
+          "tone": "orange",
+          "title": "转换好的模型",
+          "text": "大多数 Sample 提供 .bin / .hbm 下载，拿来就能跑。"
+        },
+        {
+          "icon": "code",
+          "tone": "blue",
+          "title": "板端推理代码",
+          "text": "前处理、推理、后处理代码都已写好。"
+        },
+        {
+          "icon": "book-open",
+          "tone": "green",
+          "title": "转换配方",
+          "text": "conversion/ 目录可以照着转自己的模型。"
+        }
+      ],
+      "notes": "那 Model Zoo 在哪一环帮你呢？主要省掉三件事：第一，大多数 Sample 都提供转换好的 .bin 和 .hbm，下载就能跑；第二，附带板端的前处理、推理、后处理代码；第三，conversion 目录里有转换配方，可以照着去转你自己的模型。以 ResNet 为例，目录里就是 model、conversion、runtime 三个文件夹。这三件事，正好对应本章后面的三个板块。"
+    },
+    {
+      "layout": "cards",
+      "title": "算子分配",
+      "eyebrow": "Operators",
+      "heading": "算子去 BPU 还是 CPU",
+      "cols": 4,
+      "cards": [
+        {
+          "icon": "search",
+          "tone": "orange",
+          "title": "不支持就报错",
+          "text": "报 HorizonRT not support these cpu operators：查算子支持列表或用自定义算子。"
+        },
+        {
+          "icon": "wrench",
+          "tone": "blue",
+          "title": "超限回退 CPU",
+          "text": "例如 shape（C×H×W）超过 8192 会回退到 CPU。"
+        },
+        {
+          "icon": "layers",
+          "tone": "green",
+          "title": "两端有 CPU",
+          "text": "输入输出通常有 CPU 参与的量化、反量化节点。"
+        },
+        {
+          "icon": "zap",
+          "tone": "yellow",
+          "title": "越碎越慢",
+          "text": "能不能上板，和上板后快不快，是两回事。"
+        }
+      ],
+      "notes": "再说一个新手常踩的坑：算子分配。检查工具遇到不支持的算子，会直接报错，这时可以查算子支持约束列表，或者用自定义算子来解决。还有一种情况：超出限制的算子会回退到 CPU，比如 shape 超过 8192。另外，即使模型以 BPU 为主，输入输出两端通常也有 CPU 参与的量化和反量化。记住一句话：CPU 节点越多、BPU 子图切得越碎，速度就越慢。能不能上板，和上板之后快不快，是两回事。"
+    },
+    {
+      "layout": "section",
+      "title": "章节 03",
+      "num": "03",
+      "heading": "上板看 BPU 干活",
+      "sub": "下载模型 · 看信息 · 测性能"
+    },
+    {
+      "layout": "code",
+      "title": "下载模型",
+      "eyebrow": "Demo · Model",
+      "heading": "下载模型并查看信息",
+      "lead": "在仓库根目录执行；换板时把 x5 改成 s100 / s100p / s600。",
+      "blocks": [
+        {
+          "label": "① 下载 ResNet-18",
+          "lines": [
+            "$ git clone https://github.com/D-Robotics/rdk_model_zoo.git",
+            "$ cd rdk_model_zoo",
+            {
+              "text": "$ bash samples/vision/resnet/model/download.sh x5 18",
+              "hl": true
+            }
+          ],
+          "note": {
+            "k": "要点",
+            "p": "X5 得到 resnet18_bayese_224x224_nv12.bin；S 系列得到对应的 .hbm（nashe / nashm / nashp）。"
+          }
+        },
+        {
+          "label": "② 查看模型信息",
+          "lines": [
+            "$ hrt_model_exec model_info \\",
+            "  --model_file <模型文件>"
+          ],
+          "note": {
+            "k": "要点",
+            "p": "四块板都已预装 hrt_model_exec，不用另外安装。"
+          }
+        }
+      ],
+      "notes": "好，第三个问题，我们上板，看看 BPU 在干活。先把 Model Zoo 克隆下来，进入仓库根目录，用 download 脚本下载 ResNet-18。X5 就填 x5，换板的时候改成 s100、s100p 或者 s600。X5 会得到一个 .bin 文件，S 系列得到各自对应的 .hbm 文件。然后用 hrt_model_exec model_info 看一下模型信息，输入输出、NV12 输入这些都能在这里看到。这个工具四块板都已经预装好了，不用另外安装。"
+    },
+    {
+      "layout": "code",
+      "title": "实测性能",
+      "eyebrow": "Demo · Perf",
+      "heading": "实测 BPU 推理性能",
+      "lead": "四块板语法一致；另开一个终端看 BPU 使用率。",
+      "blocks": [
+        {
+          "label": "③ 纯推理性能",
+          "lines": [
+            "$ hrt_model_exec perf \\",
+            "  --model_file <模型文件> \\",
+            "  --frame_count=200"
+          ],
+          "note": {
+            "k": "要点",
+            "p": "测极限帧率加 --thread_num=&lt;N&gt;：X5 是 1–8，S 系列是 1–32。"
+          }
+        },
+        {
+          "label": "④ BPU 使用率",
+          "lines": [
+            "$ hrut_somstatus",
+            "$ hrut_somstatus | grep -A4 -i \"bpu status\"",
+            "$ hrut_somstatus | grep -A6 -i \"bpu status\""
+          ],
+          "note": {
+            "k": "要点",
+            "p": "第一行 X5；第二行 S100 / S100P；第三行 S600（bpu0..bpu3）。"
+          }
+        }
+      ],
+      "notes": "接着测 BPU 的纯推理性能。还是 hrt_model_exec，子命令换成 perf，跑 200 帧。四块板的语法完全一样。如果想测极限帧率，可以加上 thread_num 参数，X5 可以设 1 到 8，S 系列可以设 1 到 32。跑的同时，另开一个终端，执行 hrut_somstatus，看 BPU 使用率。X5 直接看 bpu status 那一段；S 系列输出比较长，用 grep 过滤一下就行，S600 能看到 bpu0 到 bpu3 四个核在一起工作。"
+    },
+    {
+      "layout": "bars",
+      "title": "实测参考",
+      "eyebrow": "Demo · Result",
+      "heading": "ResNet-18 ==实测参考==",
+      "lead": "重点看 Average latency（平均单帧延时）和 Frame rate（帧率）；数据在 CPU 调频 performance 模式下测得。",
+      "dec": 3,
+      "sep": false,
+      "unit": "ms",
+      "rows": [
+        {
+          "label": "RDK X5",
+          "value": 2.74,
+          "hi": true
+        },
+        {
+          "label": "RDK S100",
+          "value": 0.631,
+          "hi": false
+        },
+        {
+          "label": "RDK S100P",
+          "value": 0.534,
+          "hi": false
+        },
+        {
+          "label": "RDK S600",
+          "value": 0.394,
+          "hi": false
+        }
+      ],
+      "notes": "perf 跑完，重点看两个数：Average latency，也就是平均单帧延时；还有 Frame rate，帧率。对照 Model Zoo README 里的参考数据：ResNet-18 在 X5 上是 2.740 毫秒，S100 是 0.631 毫秒，S100P 是 0.534 毫秒，S600 是 0.394 毫秒。这些数据是在 CPU 调频 performance 模式下测的。如果你测出来偏差比较大，可以先检查一下这一点。"
+    },
+    {
+      "layout": "section",
+      "title": "章节 04",
+      "num": "04",
+      "heading": "新手规则与下一课",
+      "sub": "五条规则 · 2-02 预告"
+    },
+    {
+      "layout": "bullets",
+      "title": "五条规则",
+      "eyebrow": "Rules",
+      "heading": "新手必记==五条规则==",
+      "lead": "每次动手转换前，先对照这五条。",
+      "variant": "numbered",
+      "items": [
+        "march 和格式一一对应，不跨平台复用模型、Runtime、wheel 包",
+        "默认先走 PTQ，不达标再考虑 QAT",
+        "工具链用官方 Docker，在 x86 电脑上转换",
+        "先跑 checker 看算子分配，再准备校准数据和 YAML",
+        "每次转换后都测性能和精度；板端用系统自带的 hbm_runtime"
+      ],
+      "notes": "最后，送大家五条新手必记的规则。一，march 和格式一一对应，不能跨平台复用模型、Runtime 或者 wheel 包。二，默认先走 PTQ，不达标再考虑 QAT。三，工具链用官方 Docker，在 x86 电脑上转换，板端只负责推理。四，先跑 checker 看算子分配，再准备校准数据和 YAML 配置。五，每次转换后，都要测性能和精度，不能只看\"转换成功\"；板端用系统自带的 hbm_runtime，不要去装 PyPI 上的同名包。"
+    },
+    {
+      "layout": "closing",
+      "title": "下一课",
+      "eyebrow": "Up Next · Lesson 2-02",
+      "heading": "下一课：==打开 Model Zoo==",
+      "lead": "BPU 只跑量化、编译后的模型；X5 用 .bin，S 系列用 .hbm；Model Zoo 已经准备好模型和推理代码。",
+      "cards": [
+        {
+          "icon": "grid",
+          "tone": "orange",
+          "k": "一套代码四块板",
+          "d": "看 main 分支如何同时支持四块板。"
+        },
+        {
+          "icon": "rocket",
+          "tone": "green",
+          "k": "跑通第一个 Sample",
+          "d": "用 Model Zoo 的 Python 程序跑同一个模型。"
+        },
+        {
+          "icon": "eye",
+          "tone": "yellow",
+          "k": "真正看到结果",
+          "d": "ResNet-18 输出 white wolf。"
+        }
+      ],
+      "full_logo": true,
+      "notes": "一句话回顾：BPU 只跑量化、编译之后的模型，X5 用 .bin，S 系列用 .hbm，而 Model Zoo 已经把转换好的模型和推理代码准备好了。下一课，我们正式打开 Model Zoo，看看一套代码怎么同时支持四块板，并且跑通第一个 Sample，亲眼看到 ResNet-18 输出 white wolf。我们下节课见。"
+    }
+  ]
+}

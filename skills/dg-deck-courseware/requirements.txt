@@ -1,0 +1,10 @@
+fonttools>=4.40
+brotli
+playwright
+Pillow
+beautifulsoup4
+# From this Skill directory:
+#   python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+#   .venv/bin/playwright install chromium
+# Or skip the browser download and pass --chrome /path/to/chrome (or set CHROME).
+# rembg is optional and only needed when cutting out board photos.

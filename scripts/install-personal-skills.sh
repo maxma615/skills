@@ -5,7 +5,7 @@ usage() {
   cat <<'EOF'
 Usage: install-personal-skills.sh [--target codex|claude|agents|all] [--destination DIR] [--force]
 
-Install the four personal Skills from this repository. With --force, an
+Install the personal Skills published in this repository. With --force, an
 existing managed Skill is replaced. Use --destination only with one target.
 EOF
 }
@@ -54,7 +54,7 @@ if [ -n "$destination" ] && [ "$target" = all ]; then
 fi
 
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-skill_names='rdk-course-slides-generator rdk-model-zoo-demo-review rdk-x5-toolchain-quantization rdk-yolo-toolkit'
+skill_names='rdk-course-slides-generator rdk-model-zoo-demo-review rdk-x5-toolchain-quantization rdk-yolo-toolkit dg-deck-courseware'
 
 install_to() {
   target_name=$1

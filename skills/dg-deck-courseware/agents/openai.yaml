@@ -1,0 +1,5 @@
+interface:
+  display_name: "DG Deck Courseware"
+  short_description: "Build offline D-Robotics HTML course decks."
+  brand_color: "#FF5A00"
+  default_prompt: "Use $dg-deck-courseware to turn this lesson into a single-file offline HTML deck, with an animated diagram where the idea is about flow or scale."

@@ -1,0 +1,638 @@
+{
+ "meta": {
+  "title": "dg-deck 版式总览｜18 种 layout",
+  "lang": "zh-CN",
+  "tag": "dg-deck 版式总览",
+  "footer": "版式总览"
+ },
+ "slides": [
+  {
+   "layout": "cover",
+   "title": "cover",
+   "eyebrow": "dg-deck · Layout Gallery",
+   "heading": "版式==总览==",
+   "lead": "10 种从 2-01 原版恢复，8 种按同一视觉语言重建（标记为“重建，非原版”）。",
+   "tags": [
+    {
+     "text": "18 Layouts",
+     "dark": true
+    },
+    "原版 ×10",
+    "重建 ×8"
+   ],
+   "hero": {
+    "center": "18",
+    "caption": "种版式",
+    "nodes": [
+     "恢复",
+     "重建",
+     "构建",
+     "渲染"
+    ]
+   },
+   "notes": "封面：原版版式。"
+  },
+  {
+   "layout": "agenda",
+   "title": "agenda（重建）",
+   "eyebrow": "Agenda · 重建，非原版",
+   "heading": "本课==目录==",
+   "items": [
+    {
+     "t": "BPU 是什么",
+     "s": "CPU 和 BPU 怎么分工",
+     "tm": "03:00"
+    },
+    {
+     "t": "为什么要转换和量化",
+     "s": "float32 → int8",
+     "tm": "05:00"
+    },
+    {
+     "t": "上板看 BPU 干活",
+     "s": "下载模型 · 看信息 · 测性能",
+     "tm": "06:00"
+    },
+    {
+     "t": "新手规则与下一课",
+     "s": "五条规则",
+     "tm": "02:00"
+    }
+   ],
+   "notes": "agenda：重建。"
+  },
+  {
+   "layout": "section",
+   "title": "section",
+   "num": "01",
+   "heading": "原版版式",
+   "sub": "cover · cards · section · bullets · code · flow · table · bars · links · closing"
+  },
+  {
+   "layout": "cards",
+   "title": "cards",
+   "eyebrow": "Cards",
+   "heading": "三张==卡片==",
+   "lead": "cols-3，可带编号或图标、focus 高亮。",
+   "cols": 3,
+   "cards": [
+    {
+     "icon": "chip",
+     "tone": "blue",
+     "title": "芯片",
+     "text": "图标 + 标题 + 说明。"
+    },
+    {
+     "icon": "network",
+     "tone": "orange",
+     "title": "BPU",
+     "text": "focus 卡片带橙色描边。",
+     "focus": true
+    },
+    {
+     "icon": "rocket",
+     "tone": "green",
+     "title": "上板",
+     "text": "支持 cols-2/3/4 与 cards-row。"
+    }
+   ]
+  },
+  {
+   "layout": "bullets",
+   "title": "bullets",
+   "variant": "split",
+   "eyebrow": "Bullets",
+   "heading": "要点==清单==",
+   "lead": "split 变体：左标题，右白卡列表。",
+   "items": [
+    {
+     "mark": "check",
+     "text": "check 标记"
+    },
+    {
+     "mark": "x",
+     "text": "x 标记"
+    },
+    {
+     "mark": "info",
+     "text": "info 标记"
+    },
+    {
+     "mark": "note",
+     "text": "note 标记（muted）",
+     "muted": true
+    }
+   ]
+  },
+  {
+   "layout": "code",
+   "title": "code",
+   "eyebrow": "Code",
+   "heading": "终端==逐行打字==",
+   "lead": "每个终端最多约 3–4 行，每页 2 个终端。",
+   "blocks": [
+    {
+     "label": "① 查看核数",
+     "lines": [
+      "$ cat /sys/devices/system/bpu/core_num",
+      {
+       "text": "1",
+       "out": true
+      }
+     ],
+     "note": {
+      "k": "要点",
+      "p": "out 行为灰色输出。"
+     }
+    },
+    {
+     "label": "② 测性能",
+     "lines": [
+      {
+       "text": "$ hrt_model_exec perf --frame_count=200",
+       "hl": true
+      },
+      "# 高亮行带橙色框"
+     ],
+     "note": {
+      "k": "要点",
+      "p": "hl 行打字结束后出现高亮框。"
+     }
+    }
+   ]
+  },
+  {
+   "layout": "flow",
+   "title": "flow",
+   "eyebrow": "Flow",
+   "heading": "流程==五步==",
+   "steps": [
+    {
+     "t": "采集",
+     "s": "摄像头"
+    },
+    {
+     "t": "前处理",
+     "s": "CPU"
+    },
+    {
+     "t": "推理",
+     "s": "BPU",
+     "on": true
+    },
+    {
+     "t": "后处理",
+     "s": "CPU"
+    },
+    {
+     "t": "显示",
+     "s": "屏幕"
+    }
+   ]
+  },
+  {
+   "layout": "table",
+   "title": "table",
+   "eyebrow": "Table",
+   "heading": "表格",
+   "lead": "第一行表头淡入，数据行依次上浮。",
+   "head": [
+    "板卡",
+    "架构",
+    "算力",
+    "格式"
+   ],
+   "rows": [
+    [
+     "<b>RDK X5</b>",
+     "Bayes-e",
+     {
+      "html": "10 TOPS",
+      "cls": "hc"
+     },
+     "<span class=\"chip\">.bin</span>"
+    ],
+    [
+     "<b>RDK S100</b>",
+     "Nash-e",
+     {
+      "html": "80 TOPS",
+      "cls": "hc"
+     },
+     "<span class=\"chip blue\">.hbm</span>"
+    ]
+   ]
+  },
+  {
+   "layout": "bars",
+   "title": "bars",
+   "eyebrow": "Bars",
+   "heading": "条形图==数字滚动==",
+   "unit": "ms",
+   "dec": 2,
+   "rows": [
+    {
+     "label": "RDK X5",
+     "value": 2.74
+    },
+    {
+     "label": "RDK S100",
+     "value": 0.63
+    },
+    {
+     "label": "RDK S600",
+     "value": 0.39
+    }
+   ]
+  },
+  {
+   "layout": "links",
+   "title": "links",
+   "eyebrow": "Links",
+   "heading": "资源链接",
+   "items": [
+    {
+     "k": "RDK Model Zoo",
+     "d": "模型与示例",
+     "url": "https://github.com/D-Robotics/rdk_model_zoo"
+    },
+    {
+     "k": "文档中心",
+     "d": "各板卡手册",
+     "url": "https://developer.d-robotics.cc/rdk_doc_center/"
+    }
+   ]
+  },
+  {
+   "layout": "section",
+   "title": "section",
+   "num": "02",
+   "heading": "重建版式",
+   "sub": "重建，非原版：agenda · compare · metrics · image-text · timeline · people · quote · podium"
+  },
+  {
+   "layout": "compare",
+   "title": "compare（重建）",
+   "eyebrow": "Compare · 重建，非原版",
+   "heading": "PTQ ==vs== QAT",
+   "left": {
+    "badge": "QAT",
+    "title": "量化感知训练",
+    "items": [
+     "需要重新训练",
+     "门槛更高",
+     "PTQ 不达标再考虑"
+    ]
+   },
+   "right": {
+    "badge": "PTQ · 推荐",
+    "title": "训练后量化",
+    "items": [
+     "无需重新训练",
+     "校准 20–100 张图",
+     "本章主线"
+    ]
+   }
+  },
+  {
+   "layout": "metrics",
+   "title": "metrics（重建）",
+   "eyebrow": "Metrics · 重建，非原版",
+   "heading": "关键==数字==",
+   "items": [
+    {
+     "value": 560,
+     "u": "TOPS",
+     "l": "S600 最高算力",
+     "s": "4 个 BPU 核"
+    },
+    {
+     "value": 0.394,
+     "dec": 3,
+     "u": "ms",
+     "l": "ResNet-18 延时",
+     "s": "S600 纯推理"
+    },
+    {
+     "value": 99.9,
+     "dec": 1,
+     "u": "%",
+     "l": "余弦相似度",
+     "s": "建议 ≥ 0.999"
+    }
+   ]
+  },
+  {
+   "layout": "image-text",
+   "title": "image-text（重建）",
+   "eyebrow": "Image + Text · 重建，非原版",
+   "heading": "图文==混排==",
+   "image": "brand/d-robotics-logo-full.png",
+   "contain": true,
+   "caption": "图片自动内嵌为 base64",
+   "text": "左图右文；media_right 可翻转。",
+   "items": [
+    "image 路径相对 spec 文件或 assets/",
+    "contain 为等比缩放",
+    "无 image 时显示占位"
+   ]
+  },
+  {
+   "layout": "timeline",
+   "title": "timeline（重建）",
+   "eyebrow": "Timeline · 重建，非原版",
+   "heading": "时间线",
+   "items": [
+    {
+     "tm": "Step 1",
+     "t": "浮点模型",
+     "s": "PyTorch 训练"
+    },
+    {
+     "tm": "Step 2",
+     "t": "模型检查",
+     "s": "算子分配"
+    },
+    {
+     "tm": "Step 3",
+     "t": "量化编译",
+     "s": ".bin / .hbm",
+     "on": true
+    },
+    {
+     "tm": "Step 4",
+     "t": "板端评估",
+     "s": "性能 + 精度"
+    }
+   ]
+  },
+  {
+   "layout": "timeline",
+   "title": "timeline·schedule（重建）",
+   "variant": "schedule",
+   "eyebrow": "Schedule · 重建，非原版",
+   "heading": "日程表",
+   "items": [
+    {
+     "tm": "09:30",
+     "t": "开场",
+     "s": "课程介绍"
+    },
+    {
+     "tm": "10:00",
+     "t": "动手实验",
+     "s": "上板跑 ResNet-18"
+    },
+    {
+     "tm": "11:30",
+     "t": "答疑"
+    }
+   ]
+  },
+  {
+   "layout": "people",
+   "title": "people（重建）",
+   "eyebrow": "People · 重建，非原版",
+   "heading": "讲师团队",
+   "items": [
+    {
+     "n": "张三",
+     "r": "主讲",
+     "o": "D-Robotics"
+    },
+    {
+     "n": "李四",
+     "r": "助教",
+     "o": "工具链"
+    },
+    {
+     "n": "王五",
+     "r": "助教",
+     "o": "Model Zoo"
+    }
+   ]
+  },
+  {
+   "layout": "quote",
+   "title": "quote（重建）",
+   "quote": "能不能上板，和上板之后==快不快==，是两回事。",
+   "who": "RDK 小课堂",
+   "role": "第二章 第 1 课"
+  },
+  {
+   "layout": "podium",
+   "title": "podium（重建）",
+   "eyebrow": "Podium · 重建，非原版",
+   "heading": "延时==排行==",
+   "items": [
+    {
+     "t": "RDK S600",
+     "w": "Nash-p",
+     "p": "0.394 ms"
+    },
+    {
+     "t": "RDK S100P",
+     "w": "Nash-m",
+     "p": "0.534 ms"
+    },
+    {
+     "t": "RDK S100",
+     "w": "Nash-e",
+     "p": "0.631 ms"
+    }
+   ],
+   "awards": [
+    "ResNet-18",
+    "纯推理",
+    "performance 模式"
+   ]
+  },
+  {
+   "layout": "diagram",
+   "title": "diagram",
+   "eyebrow": "diagram · 新增，非原版",
+   "heading": "图解：<span class=\"hl\">CPU</span> 与 BPU",
+   "height": 470,
+   "scene": [
+    {
+     "type": "box",
+     "id": "c",
+     "x": 60,
+     "y": 80,
+     "w": 420,
+     "h": 240,
+     "label": "CPU",
+     "sub": "前处理 / 后处理",
+     "icon": "terminal",
+     "kind": "cpu",
+     "on": true
+    },
+    {
+     "type": "box",
+     "id": "b",
+     "x": 1120,
+     "y": 80,
+     "w": 420,
+     "h": 240,
+     "label": "BPU",
+     "sub": "神经网络推理",
+     "icon": "network",
+     "kind": "bpu",
+     "on": true
+    },
+    {
+     "type": "arrow",
+     "id": "a1",
+     "points": [
+      [
+       480,
+       170
+      ],
+      [
+       1120,
+       170
+      ]
+     ],
+     "mode": "flow",
+     "label": "输入张量",
+     "label_at": [
+      800,
+      150
+     ],
+     "color": "orange"
+    },
+    {
+     "type": "arrow",
+     "id": "a2",
+     "points": [
+      [
+       1120,
+       240
+      ],
+      [
+       480,
+       240
+      ]
+     ],
+     "mode": "flow",
+     "color": "blue",
+     "label": "输出张量",
+     "label_at": [
+      800,
+      290
+     ]
+    },
+    {
+     "type": "token",
+     "id": "t",
+     "x": 560,
+     "y": 170,
+     "label": "NV12",
+     "w": 100,
+     "h": 40
+    },
+    {
+     "type": "meter",
+     "id": "m",
+     "x": 700,
+     "y": 400,
+     "w": 500,
+     "h": 30,
+     "value": 0.6,
+     "label": "meter",
+     "vlabel": "60%",
+     "kind": "bpu",
+     "size": 22
+    }
+   ],
+   "steps": [
+    {
+     "at": 0,
+     "show": [
+      "c"
+     ],
+     "caption": "CPU 先做前处理"
+    },
+    {
+     "at": 1200,
+     "show": [
+      "a1",
+      "t"
+     ],
+     "move": [
+      {
+       "id": "t",
+       "path": [
+        [
+         560,
+         170
+        ],
+        [
+         1030,
+         170
+        ]
+       ],
+       "speed": 0.5
+      }
+     ],
+     "caption": "把张量交给 BPU"
+    },
+    {
+     "at": 2600,
+     "show": [
+      "b"
+     ],
+     "focus": [
+      "b"
+     ],
+     "caption": "BPU 做推理"
+    },
+    {
+     "at": 4200,
+     "show": [
+      "a2"
+     ],
+     "focus": null,
+     "caption": "结果交回 CPU 做后处理"
+    },
+    {
+     "at": 5400,
+     "show": [
+      "m"
+     ],
+     "on": [
+      "m"
+     ],
+     "caption": "meter / photo / hist / levels 等元素见 references/layouts.md"
+    }
+   ]
+  },
+  {
+   "layout": "closing",
+   "title": "closing",
+   "eyebrow": "That's All",
+   "heading": "18 种版式==完==",
+   "lead": "原版 10 种 + 重建 8 种。",
+   "cards": [
+    {
+     "icon": "grid",
+     "tone": "orange",
+     "k": "build.py",
+     "d": "JSON → HTML"
+    },
+    {
+     "icon": "eye",
+     "tone": "blue",
+     "k": "render.py",
+     "d": "HTML → PNG / PDF"
+    },
+    {
+     "icon": "book-open",
+     "tone": "green",
+     "k": "references/",
+     "d": "spec 与 layouts"
+    }
+   ]
+  }
+ ]
+}
