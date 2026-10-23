@@ -3,14 +3,14 @@ name: dg-deck-courseware
 description: >-
   Use when making or revising a D-Robotics / RDK-style single-file HTML
   courseware or presentation deck (课件), including animated explainer diagrams,
-  from a JSON spec, lesson notes, or an rdk-course-slides-generator blueprint.
+  from a JSON spec, lesson notes, or an RDK course blueprint JSON.
 ---
 
 # dg-deck 课件生成
 
 Generate a D-Robotics / RDK-style single-file offline HTML courseware deck (课件). Output is one offline HTML file with fonts, logos, icons, and photos inlined as base64.
 
-This skill renders the deck. [`rdk-course-slides-generator`](../rdk-course-slides-generator/SKILL.md) turns an RDK handbook into a blueprint; `scripts/convert_rdk_blueprint.py` turns that blueprint into a dg-deck spec. Docs: [usage](references/usage.md), [spec](references/spec.md), and [layouts](references/layouts.md). The layouts doc has a diagram section.
+This skill renders the deck. `scripts/convert_rdk_blueprint.py` turns an RDK course blueprint JSON (cover, cards, checklist, timeline, flow, code, resources, closing) into a dg-deck spec. Docs: [usage](references/usage.md), [spec](references/spec.md), and [layouts](references/layouts.md). The layouts doc has a diagram section.
 
 Run every script from this Skill directory with a virtualenv that has `requirements.txt` installed. `fonttools` and `brotli` are required to build. `playwright` and `Pillow` are required to render, preview, and smoke-test. `beautifulsoup4` is required only by `extract_spec.py`. `rembg` is optional and is only for cutting out board photos.
 
@@ -33,7 +33,7 @@ On Windows, use `.venv\Scripts\python` instead of `.venv/bin/python`. To skip th
      - `examples/lesson-2-01.zh.json` reproduces the original 24-slide v3 deck exactly. It deliberately keeps the old X5U-only wording, so don't copy facts from it; use the board facts below.
      - `examples/layout-gallery.zh.json` shows every layout.
      - For a large deck, generate the spec from a small Python script, e.g. `make_spec.py` next to the deck, so revisions are reproducible.
-   - **From a blueprint made by `rdk-course-slides-generator`:** run `python scripts/convert_rdk_blueprint.py blueprint.json -o spec.json`, then review it. For an RDK 小课堂 lesson add `--chapter N --chapter-name <章名> --lesson M` (optionally `--cover-title`, `--highlight`, `--subtitle`, `--visual`) so slide 1 becomes the series cover. Blueprints carry no speaker notes, and an empty checklist renders as a heading only.
+   - **From an RDK course blueprint JSON:** run `python scripts/convert_rdk_blueprint.py blueprint.json -o spec.json`, then review it. The blueprint is a JSON object with `meta` and `slides`, where each slide has a `pattern` such as `cover`, `cards-3`, `split-checklist`, `flow-5`, `code-highlight`, `resource-list`, or `closing`. For an RDK 小课堂 lesson add `--chapter N --chapter-name <章名> --lesson M` (optionally `--cover-title`, `--highlight`, `--subtitle`, `--visual`) so slide 1 becomes the series cover. Blueprints carry no speaker notes, and an empty checklist renders as a heading only.
    - **To edit an existing dg-deck HTML whose spec is lost:** run `python scripts/extract_spec.py deck.html -o spec.json`.
    - **Slide 1 of every RDK 小课堂 deck (zh and en) is the `series-cover` layout.** Fill `chapter`, `chapter_name`, `lesson`, `title` and `highlight` (plus optional `subtitle` and `visual`: `bpu`, `quant` or `none`); the badge `N-MM` and the full title 【RDK 小课堂】第 N 章 <章名> · 第 M 课｜<课名> (en: [RDK Classroom] Chapter N <name> · Lesson M | <title>) are derived from those fields. Don't hand-edit the cover afterwards. See the `series-cover` section of [references/layouts.md](references/layouts.md).
    - **Viewer UI language follows `meta.lang`.** The page-turn hint, prev/next labels and the empty-notes text are Chinese for `zh` and English for `en`; override single strings with `meta.ui`.

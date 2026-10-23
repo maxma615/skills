@@ -8,7 +8,7 @@
 
 ### 目录
 
-- `skills/`：可安装的 Skill 包。目前发布 `rdk-course-slides-generator`、`rdk-model-zoo-demo-review`、`rdk-x5-toolchain-quantization`、`rdk-yolo-toolkit` 和 `dg-deck-courseware`。
+- `skills/`：可安装的 Skill 包。目前发布 `rdk-model-zoo-demo-review`、`rdk-x5-toolchain-quantization`、`rdk-yolo-toolkit` 和 `dg-deck-courseware`。
 - `projects/`：Skill 开发过程中的项目说明、设计和验证材料。
 - `shared/`：多个 Skill 可复用的参考资料、脚本和资产。
 - `templates/`：新建 Skill 项目的起始模板。
@@ -38,7 +38,7 @@
 
 ### 许可与品牌
 
-仓库代码和文档适用 MIT 许可证；`rdk-course-slides-generator` 与 `dg-deck-courseware` 中的品牌素材、Logo 与示例例外，使用前请阅读 [NOTICE.md](NOTICE.md)。
+仓库代码和文档适用 MIT 许可证；`dg-deck-courseware` 中的品牌素材、Logo 与示例例外，使用前请阅读 [NOTICE.md](NOTICE.md)。
 
 ## English
 
@@ -46,7 +46,7 @@ This is Max.Ma's cross-agent Skills repository for Codex and Claude Code. It col
 
 ### Layout
 
-- `skills/`: Installable Skill packages. It currently publishes `rdk-course-slides-generator`, `rdk-model-zoo-demo-review`, `rdk-x5-toolchain-quantization`, `rdk-yolo-toolkit`, and `dg-deck-courseware`.
+- `skills/`: Installable Skill packages. It currently publishes `rdk-model-zoo-demo-review`, `rdk-x5-toolchain-quantization`, `rdk-yolo-toolkit`, and `dg-deck-courseware`.
 - `projects/`: Project briefs, designs, and validation material for Skills in development.
 - `shared/`: References, scripts, and assets shared by multiple Skills.
 - `templates/`: Starter material for new Skill projects.
@@ -76,4 +76,4 @@ See [sources/third-party-skills.md](sources/third-party-skills.md) for upstream 
 
 ### License and marks
 
-Repository code and documentation use MIT, except for the branded assets, logos, and examples in `rdk-course-slides-generator` and `dg-deck-courseware`. Read [NOTICE.md](NOTICE.md) before reusing them.
+Repository code and documentation use MIT, except for the branded assets, logos, and examples in `dg-deck-courseware`. Read [NOTICE.md](NOTICE.md) before reusing them.

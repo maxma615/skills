@@ -1,15 +1,5 @@
 # Notices
 
-## RDK Course Slides Generator
-
-The repository's MIT License does **not** grant rights to the D-Robotics or
-地瓜 trademarks, the bundled files
-`skills/rdk-course-slides-generator/assets/logo-cn.png` and
-`skills/rdk-course-slides-generator/assets/logo-en.png`, or the branded
-course examples in that Skill. These materials may be used only with
-permission from their respective rights holders. This repository is not an
-official D-Robotics distribution or affiliation statement.
-
 ## dg-deck courseware
 
 The repository's MIT License does **not** grant rights to the D-Robotics or
@@ -18,12 +8,11 @@ The repository's MIT License does **not** grant rights to the D-Robotics or
 with permission from their respective rights holders. This repository is not
 an official D-Robotics distribution or affiliation statement.
 
-`d-robotics-logo-full.png` and `d-robotics-logo-full-en.png` are the same
-files as `skills/rdk-course-slides-generator/assets/logo-cn.png` and
-`logo-en.png`. `d-robotics-logo-official.png` is a reference copy and is not
-embedded by the builder. `d-robotics-icon-dark.png` is a self-made white
-icon for dark slides, not an official D-Robotics logo. Confirm it with
-design before any external use.
+`d-robotics-logo-full.png` is the Chinese 「地瓜机器人」 closing-slide wordmark.
+`d-robotics-logo-full-en.png` is the English D-Robotics closing-slide wordmark.
+`d-robotics-logo-official.png` is a reference copy and is not embedded by the
+builder. `d-robotics-icon-dark.png` is a self-made white icon for dark slides,
+not an official D-Robotics logo. Confirm it with design before any external use.
 
 The WOFF2 files in `skills/dg-deck-courseware/assets/fonts/` are subsetted
 Noto Sans CJK SC, Outfit, and JetBrains Mono, under the SIL Open Font
@@ -34,10 +23,8 @@ and `DG Mono`.
 
 ## Lucide icon attribution
 
-The inline SVG icon definitions in
-`skills/rdk-course-slides-generator/scripts/build-html.py`, and the SVG files
-in `skills/dg-deck-courseware/assets/icons/`, are based on Lucide Icons and
-are distributed under the ISC License:
+The SVG files in `skills/dg-deck-courseware/assets/icons/` are based on
+Lucide Icons and are distributed under the ISC License:
 
 ```text
 Copyright (c) 2026 Lucide Icons and Contributors

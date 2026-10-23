@@ -55,7 +55,7 @@ SVG_OPEN = ('<svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 _icon_cache = {}
 
 
-ICON_ALIASES = {'brain': 'network', 'list-check': 'list-checks', 'gradcap': 'graduation-cap'}  # names used by rdk-course-slides-generator
+ICON_ALIASES = {'brain': 'network', 'list-check': 'list-checks', 'gradcap': 'graduation-cap'}  # legacy RDK blueprint icon names
 
 
 def icon(name):
