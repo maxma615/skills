@@ -38,8 +38,6 @@ archive/
 # First public release: keep local work material out of the repository.
 /skills/*
 !/skills/.gitkeep
-!/skills/rdk-course-slides-generator/
-!/skills/rdk-course-slides-generator/**
 !/skills/rdk-model-zoo-demo-review/
 !/skills/rdk-model-zoo-demo-review/**
 !/skills/rdk-x5-toolchain-quantization/
@@ -50,7 +48,6 @@ archive/
 !/skills/dg-deck-courseware/**
 
 # Keep validation bytecode out of published course Skills.
-/skills/rdk-course-slides-generator/**/__pycache__/
 /skills/dg-deck-courseware/**/__pycache__/
 /skills/dg-deck-courseware/assets/fonts/sources/
 /projects/*

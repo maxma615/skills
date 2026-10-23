@@ -54,7 +54,7 @@ if [ -n "$destination" ] && [ "$target" = all ]; then
 fi
 
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-skill_names='rdk-course-slides-generator rdk-model-zoo-demo-review rdk-x5-toolchain-quantization rdk-yolo-toolkit dg-deck-courseware'
+skill_names='rdk-model-zoo-demo-review rdk-x5-toolchain-quantization rdk-yolo-toolkit dg-deck-courseware'
 
 install_to() {
   target_name=$1

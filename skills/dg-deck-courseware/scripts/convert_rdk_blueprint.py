@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Convert a blueprint JSON from skills/rdk-course-slides-generator
-(lesson Markdown -> blueprint -> HTML) into a dg-deck spec.
+"""Convert an RDK course blueprint JSON into a dg-deck spec.
 
 usage: convert_rdk_blueprint.py blueprint.json -o spec.json [--tag "RDK 小课堂 1-01"] [--footer "社区与生态"]
        [--chapter 2 --chapter-name "Model Zoo" --lesson 1 [--subtitle "…"] [--visual bpu|quant|img] [--highlight BPU]]
